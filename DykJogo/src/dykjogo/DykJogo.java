@@ -1,5 +1,6 @@
 package dykjogo;
 
+import Util.Menu;
 import java.util.Scanner;
 import Util.Usuario;
 
@@ -9,50 +10,49 @@ public class DykJogo {
     static final int NAO = 2;
     static Scanner in = new Scanner(System.in);
     static Usuario usuario = new Usuario();
+    static Menu menu = new Menu();
     
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
         
         //interação com o usuário
         System.out.println("Seja Bem Vindo(a) ao DYK, seu jogo de Perguntas e respostas!!!\n");
-        System.out.println("Lembrando que o DYK é um jogo para jogar em duplas!\n");
-        System.out.println("Você e seu (sua) oponente já possuem uma conta conosco?");
         
-        int existeUsuarioCadastrado = validacaoSimNao(); 
-        
-        if (existeUsuarioCadastrado == SIM)
+        menu.MenuInicializacao();
+                
+        int opcaoInicial = 0;
+        do 
         {
-            //LOGAR EM SUAS CONTAS
-            int tentativas = 0;
-            boolean emailValido = false;                   
-            do
+            System.out.print("Digite a opção desejada: ");
+            opcaoInicial = in.nextInt();
+            
+            switch (opcaoInicial)
             {
-                emailValido = verificarEmail();
-                if (!emailValido)
-                {
-                    System.out.println("Não encontramos o e-mail digitado. Tentar novamente?");
-                    int tentarNovamente = validacaoSimNao();
-                    if(tentarNovamente == NAO)
-                        tentativas = 3;
-                    else tentativas ++;
-                }
-                 
-                tentativas ++;
+                case 1:
+                    iniciaJogo();
+                  break;
+                case 2:
+                    System.out.println("opcao2");
+                  break;
+                case 3:
+                    menu.MenuRegras();
+                    System.out.println("\n");
+                    menu.MenuInicializacao();
+                  break;
+                case 0:
+                    menu.MenuEncerramento();
+                  break;
+                default:
+                    System.out.println("\n Opção inválida digite novamente!");
+                    menu.MenuInicial();
             }
-            while (!emailValido && tentativas < 3);
-            
-            if (!emailValido)
-            {
-                System.out.println("O email digitado não foi encontrado.\n");
-                System.out.println("Voc");
-                validacaoSimNao();
-            }
-            
-            System.out.println("Digite sua senha");
-            String senha = in.next();
-            
-            
         }
+        while (opcaoInicial >1 || opcaoInicial<0);
+        
+        if (opcaoInicial == 1)
+            System.out.println("Fim de jogo!");
     }
+    
     public static int validacaoSimNao()
     {
         int validacao = 0;
@@ -64,12 +64,32 @@ public class DykJogo {
         while (validacao > 2 || validacao < 1  );
         return validacao; 
     }
+    
     public static boolean verificarEmail()
     {
         System.out.println("Digite seu e-mail");
         //String email = in.next();
         
         return usuario.validarEmail("email");
+    }
+    
+    public static void iniciaJogo()
+    {
+        System.out.print("""
+                         Lembrando que o DYK é um jogo para jogar em duplas!
+                         Você e seu oponente já possuem conta conosco?    
+                           """);
+        int existeUsuarioCadastrado = validacaoSimNao();
+        
+        if(existeUsuarioCadastrado == NAO)
+        {
+            //cadastrar a conta
+        }
+        else
+        {
+            //recupera os dados do usuário
+        }
+        
     }
 }
 
