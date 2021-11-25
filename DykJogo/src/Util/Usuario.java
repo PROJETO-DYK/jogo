@@ -52,12 +52,10 @@ public class Usuario {
         this.senha = senha;
     }
     
-    public boolean validarEmail(String email)
+    public boolean ValidarEmail(String email)
     {
-        
-        return false;
+        //String emailCadastrado = 
     }
-    
     
     
     
