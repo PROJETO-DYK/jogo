@@ -11,9 +11,15 @@ public class DykJogo {
     static Scanner in = new Scanner(System.in);
     static Usuario usuario = new Usuario();
     static Menu menu = new Menu();
+    static JDBCConector conector;
     
     public static void main(String[] args) 
     {
+        //Teste de conexao com o Banco de dados//
+        conector = new JDBCConector();
+        conector.inciarConexao();
+        
+        conector.encerrarConexao();
         
         //interação com o usuário
         System.out.println("Seja Bem Vindo(a) ao DYK, seu jogo de Perguntas e respostas!!!\n");
@@ -64,14 +70,13 @@ public class DykJogo {
         while (validacao > 2 || validacao < 1  );
         return validacao; 
     }
-    
-    public static boolean verificarEmail()
+   
+    /*public static boolean verificarEmail()
     {
         System.out.println("Digite seu e-mail");
         //String email = in.next();
-        
-        return usuario.validarEmail("email");
-    }
+        return usuario.ValidarEmail("email");
+    }*/
     
     public static void iniciaJogo()
     {

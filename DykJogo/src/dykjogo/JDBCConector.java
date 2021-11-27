@@ -1,22 +1,19 @@
-package Repository;
+package dykjogo;
 
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author thiago.f.santos
  */
-public class ConfiguracaoRepository {
-   private final String URL = "jdbc:mysql://localhost:3306/tp_schema";
-   private final String USER = "admin";
-   private final String PASSWD = "123456";
+public class JDBCConector {
+   private final String URL = "jdbc:mysql://localhost:3306/";
+   private final String USER = "root";
+   private final String PASSWD = "Gafs1999@";
    private final String DRIVER_BANCO = "com.mysql.cj.jdbc.Driver";
    
    private Connection conexao;
    
-   public void InciarConexao()
+   public void inciarConexao()
    {
        try {
            Class.forName(DRIVER_BANCO);

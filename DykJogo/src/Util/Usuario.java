@@ -51,13 +51,12 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    
-    public boolean ValidarEmail(String email)
+   
+    /*public boolean ValidarEmail(String email)
     {
-        //String emailCadastrado = 
-    }
-    
-    
+        return false;
+    }*/
+   
     
     
     
