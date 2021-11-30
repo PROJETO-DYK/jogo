@@ -1,1 +1,1 @@
-[Documentacao](../documentacao/README.md)
+[Documentacao](../documentacao)
