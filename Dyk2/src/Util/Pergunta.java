@@ -2,7 +2,39 @@ package Util;
 
 import java.util.List;
 
-public class Pergunta extends Alternativa {
+public class Pergunta {
     private int CodigoPergunta;
-    //private List<int> Alternativa;
+    private String Pergunta;
+    private List<Alternativa> Alternativas;
+
+    public Pergunta(int CodigoPergunta, String Pergunta, List<Alternativa> Alternativas) {
+        this.CodigoPergunta = CodigoPergunta;
+        this.Pergunta = Pergunta;
+        this.Alternativas = Alternativas;
+    }
+
+    public int getCodigoPergunta() {
+        return CodigoPergunta;
+    }
+
+    public void setCodigoPergunta(int CodigoPergunta) {
+        this.CodigoPergunta = CodigoPergunta;
+    }
+
+    public String getPergunta() {
+        return Pergunta;
+    }
+
+    public void setPergunta(String Pergunta) {
+        this.Pergunta = Pergunta;
+    }
+
+    public List<Alternativa> getAlternativas() {
+        return Alternativas;
+    }
+
+    public void setAlternativas(List<Alternativa> Alternativas) {
+        this.Alternativas = Alternativas;
+    }
+    
 }
