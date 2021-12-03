@@ -13,6 +13,8 @@ public class Usuario {
     private String Apelido;
     private String Senha;
     private boolean UsuarioAtivo;
+    private int NumeroJogador;
+    private Personagem personagem; 
     
     static Scanner in = new Scanner(System.in);
     
@@ -81,6 +83,16 @@ public class Usuario {
 
     public void setUsuarioAtivo(boolean UsuarioAtivo) {
         this.UsuarioAtivo = UsuarioAtivo;
+    }
+    
+    public int getNumeroJogador()
+    {
+        return NumeroJogador;
+    }
+
+    public void setNumeroJogador(int NumeroJogador)
+    {
+        this.NumeroJogador = NumeroJogador;
     }
     
 }
