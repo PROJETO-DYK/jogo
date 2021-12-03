@@ -94,5 +94,17 @@ public class Usuario {
     {
         this.NumeroJogador = NumeroJogador;
     }
+
+    public Personagem getPersonagem()
+    {
+        return personagem;
+    }
+
+    public void setPersonagem(Personagem personagem)
+    {
+        this.personagem = personagem;
+    }
+    
+    
     
 }

@@ -5,19 +5,19 @@ import java.util.List;
 public class Personagem {
     private int IdPersonagem;
     private String NomePersonagem;
-    private String StatusPersonagem;
-    private List<String> Habilidades;
+    private List<Habilidade> Habilidades;
     private Float TempoVida;
     private boolean IndicadorEscolhido;
 
-    public Personagem(int IdPersonagem, String NomePersonagem, String StatusPersonagem, List<String> Habilidades, Float TempoVida, boolean IndicadorEscolhido) {
+    public Personagem(int IdPersonagem, String NomePersonagem, List<Habilidade> Habilidades, Float TempoVida, boolean IndicadorEscolhido)
+    {
         this.IdPersonagem = IdPersonagem;
         this.NomePersonagem = NomePersonagem;
-        this.StatusPersonagem = StatusPersonagem;
         this.Habilidades = Habilidades;
         this.TempoVida = TempoVida;
         this.IndicadorEscolhido = IndicadorEscolhido;
     }
+    public Personagem(){ }
 
     public int getIdPersonagem() {
         return IdPersonagem;
@@ -35,19 +35,11 @@ public class Personagem {
         this.NomePersonagem = NomePersonagem;
     }
 
-    public String getStatusPersonagem() {
-        return StatusPersonagem;
-    }
-
-    public void setStatusPersonagem(String StatusPersonagem) {
-        this.StatusPersonagem = StatusPersonagem;
-    }
-
-    public List<String> getHabilidades() {
+    public List<Habilidade> getHabilidades() {
         return Habilidades;
     }
 
-    public void setHabilidades(List<String> Habilidades) {
+    public void setHabilidades(List<Habilidade> Habilidades) {
         this.Habilidades = Habilidades;
     }
 

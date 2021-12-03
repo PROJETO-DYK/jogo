@@ -2,6 +2,7 @@ package dyk2;
 
 import Repository.JDBCConector;
 import Util.Menu;
+import Util.Personagem;
 import java.util.Scanner;
 import Util.Usuario;
 import java.sql.SQLException;
@@ -94,10 +95,18 @@ public class Dyk2
                                                 
                         if (jogador.getCodigoUsuario()>0)
                         {
-                            jogador.setNumeroJogador(i);
-                            usuariosLogados.add(jogador);
-                            System.out.println("Usuario logado com sucesso!");
-                            opcaoValida = true;
+                            if(jogador.getPersonagem() == null)
+                            {
+                                System.out.println("Não foi possível recuperar o seu Personagem");
+                                //Criar fluxo para cadastro de Personagem
+                            }
+                            else
+                            {
+                                jogador.setNumeroJogador(i);
+                                usuariosLogados.add(jogador);
+                                System.out.println("Usuario logado com sucesso!");
+                                opcaoValida = true;
+                            }
                         }
                         
                     }
@@ -153,10 +162,14 @@ public class Dyk2
         System.out.print("Digite sua senha: ");
         String senha = in.next();
         usuario.setSenha(senha);
-        
-        // Recupero o Personagem do usuário do banco
 
-        return conector.buscarUsuario(email,senha);
+        Usuario jogador = conector.buscarUsuario(email,senha);
+        
+        Personagem penrsonagem = conector.buscarAvatarDoUsuario(jogador);
+        
+        jogador.setPersonagem(penrsonagem);
+        
+        return jogador;
     }
 }
 

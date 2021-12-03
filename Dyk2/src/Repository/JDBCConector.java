@@ -1,7 +1,10 @@
 package Repository;
 
+import Util.Habilidade;
+import Util.Personagem;
 import Util.Usuario;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class JDBCConector
 {
@@ -94,12 +97,10 @@ public class JDBCConector
                 + "where email = '" + email
                 + "' and senha = '" + senha + "'";
 
-        String args[] = {email, senha};
-
         ResultSet res = criarStatement(query);
 
         res.next();
-        Usuario usuario = new Usuario(res.getInt(1),
+        Usuario usuario = new Usuario(res.getInt("COD_USUARIO"),
                 res.getString("NOME_USUARIO"),
                 res.getString("SOBRENOME_USUARIO"),
                 res.getString("EMAIL"),
@@ -107,6 +108,44 @@ public class JDBCConector
                 res.getString("SENHA"),
                 res.getBoolean("IND_ATIVO"));
         return usuario;
+    }
+    
+    public Personagem buscarAvatarDoUsuario(Usuario jogador) throws SQLException
+    {
+        ArrayList<Habilidade> habilidades = new ArrayList<Habilidade>();
+        Personagem personagem = new Personagem();
+        
+        String query = "SELECT P.COD_PERSONAGEM, P.NOME_PERSONAGEM, P.TEMPO_VIDA, P. IND_ESCOLHIDO, H.COD_HABILIDADE,H.DESC_HABILIDADE "
+                + "from personagem P "
+                + "JOIN habilidade_personagem HP ON HP.COD_PERSONAGEM = P.COD_PERSONAGEM "
+                + "JOIN habilidade H ON H.COD_HABILIDADE = HP.COD_HABILIDADE "
+                + "where USUARIO_COD_USUARIO = " + jogador.getCodigoUsuario();
+
+        ResultSet res = criarStatement(query);
+        
+        while(res.next())
+        {
+            if(!res.isLast()){
+
+                habilidades.add(new Habilidade(
+                                res.getInt("COD_HABILIDADE"),
+                                res.getString("DESC_HABILIDADE")
+                ));
+            } else
+            {   
+                habilidades.add(new Habilidade(
+                                res.getInt("COD_HABILIDADE"),
+                                res.getString("DESC_HABILIDADE")
+                ));
+                personagem = new Personagem(res.getInt("COD_PERSONAGEM"),
+                                                       res.getString("NOME_PERSONAGEM"),
+                                                       habilidades,
+                                                       res.getFloat("TEMPO_VIDA"),
+                                                       res.getBoolean("IND_ESCOLHIDO"));                
+            }
+        }
+                
+        return personagem;
     }
 
     public void criarUsuario(Usuario usuario)
