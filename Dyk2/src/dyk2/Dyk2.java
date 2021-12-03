@@ -40,7 +40,7 @@ public class Dyk2
             
             switch (opcaoInicial)
             {
-                case 1 -> iniciaJogo();
+                case 1 -> iniciaJogo(args);
                 case 2 -> System.out.println("opcao2");
                 case 3 -> 
                 {
@@ -73,7 +73,7 @@ public class Dyk2
     
     
     
-    public static void iniciaJogo() throws SQLException
+    public static void iniciaJogo(String[] args) throws SQLException
     {
         System.out.println("Lembrando que o DYK é um jogo para jogar em duplas!\n");
         
@@ -112,7 +112,7 @@ public class Dyk2
                     }
                     case 2 ->
                     {
-                        System.out.println("chamar metodo para ja cadastrado");//TODO: Logica
+                        criarUsuario(args);
                         opcaoValida = true;
                     }
                     case 3 ->
@@ -163,13 +163,46 @@ public class Dyk2
         String senha = in.next();
         usuario.setSenha(senha);
 
-        Usuario jogador = conector.buscarUsuario(email,senha);
+        Usuario jogador = conector.buscarUsuario(email,senha,1);
         
         Personagem penrsonagem = conector.buscarAvatarDoUsuario(jogador);
         
         jogador.setPersonagem(penrsonagem);
         
         return jogador;
+    }
+    
+    //public static Usuario criarJogador() throws SQLException
+    {
+        // criar usuario
+        // buscar avatar disponiveis
+        // pedir para o usuario selecionar o avatar ou criar um novo
+        // se for criar o usuario tem que nomear e as habilidades sao adiquiridas de forma aleatória
+        // se ele selecionar retorno com o avatar escolhido e jogador criado
+    }
+    
+    public static void criarUsuario(String[] args) throws SQLException
+    {
+        Usuario usuario;
+        
+        System.out.println("Bem vindo a tela de cadastro de Usuario!\n");
+        
+        System.out.print("Para começar, digite seu e-mail: ");
+        
+        String email = in.next();
+        
+        usuario = conector.buscarUsuario(email,"",2);
+        
+        if(usuario.getCodigoUsuario()<0)
+        {
+            main(args);
+        }
+        
+        System.out.println("Parar");
+    }
+    
+    public static void reiniciar(){
+        
     }
 }
 

@@ -105,6 +105,14 @@ public class Usuario {
         this.personagem = personagem;
     }
     
-    
+    public void preencherUsuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo) {
+        this.CodigoUsuario = CodigoUsuario;
+        this.NomeUsuario = NomeUsuario;
+        this.SobrenomeUsuario = SobrenomeUsuario;
+        this.Email = Email;
+        this.Apelido = Apelido;
+        this.Senha = Senha;
+        this.UsuarioAtivo = UsuarioAtivo;
+    }
     
 }
