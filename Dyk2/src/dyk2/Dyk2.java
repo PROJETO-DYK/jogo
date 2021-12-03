@@ -41,7 +41,7 @@ public class Dyk2
             switch (opcaoInicial)
             {
                 case 1 -> iniciaJogo(args);
-                case 2 -> System.out.println("opcao2");
+                case 2 -> System.out.println("opcao2");//TODO
                 case 3 -> 
                 {
                     menu.MenuRegras();
@@ -84,6 +84,7 @@ public class Dyk2
             boolean opcaoValida = false;
             do 
             {
+                Usuario jogador = new Usuario();
                 menu.MenuInicial();
                 System.out.print("Digite a opção desejada: ");
                 int opcaoDesejada = in.nextInt();
@@ -91,28 +92,38 @@ public class Dyk2
                 switch (opcaoDesejada){
                     case 1 ->//Usuario cadastrado
                     {
-                        Usuario jogador = buscarJogador();//TODO: Logica
+                        jogador = buscarJogador(jogador);
                                                 
-                        if (jogador.getCodigoUsuario()>0)
+                        if (jogador.getCodigoUsuario()>0 && jogador.getPersonagem() != null)
                         {
-                            if(jogador.getPersonagem() == null)
-                            {
-                                System.out.println("Não foi possível recuperar o seu Personagem");
-                                //Criar fluxo para cadastro de Personagem
-                            }
-                            else
-                            {
-                                jogador.setNumeroJogador(i);
-                                usuariosLogados.add(jogador);
-                                System.out.println("Usuario logado com sucesso!");
-                                opcaoValida = true;
-                            }
+                            jogador.setNumeroJogador(i);
+                            usuariosLogados.add(jogador);
+                            System.out.println("Usuario logado com sucesso!");
+                            opcaoValida = true;
                         }
-                        
+                        else
+                        {
+                            System.out.println("Não foi possível recuperar o seu Personagem");
+                            //Criar fluxo para cadastro de Personagem
+                        }
                     }
                     case 2 ->
                     {
-                        criarUsuario(args);
+                        jogador = criarUsuario(args);
+                        
+                        if (jogador.getCodigoUsuario()>0 && jogador.getPersonagem() != null)
+                        {
+                            jogador.setNumeroJogador(i);
+                            usuariosLogados.add(jogador);
+                            System.out.println("Usuario logado com sucesso!");
+                            opcaoValida = true;
+                        }
+                        else
+                        {
+                            System.out.println("Não foi possível recuperar o seu Personagem");
+                            //Criar fluxo para cadastro de Personagem
+                        }
+                        
                         opcaoValida = true;
                     }
                     case 3 ->
@@ -136,7 +147,7 @@ public class Dyk2
             
         }
         
-        //inicia o jogo(passando a lista de usuarios)
+        //inicia o jogo(passando a lista de usuarios) Gladson
                 
     }
     
@@ -153,18 +164,21 @@ public class Dyk2
         return validacao; 
     }
     
-    public static Usuario buscarJogador() throws SQLException
-    {            
-        System.out.print("Digite o seu e-mail: ");
-        String email = in.next();
-        usuario.setEmail(email);
+    public static Usuario buscarJogador(Usuario jogador) throws SQLException
+    {
+        if (jogador == null)
+        {
+            System.out.print("Digite o seu e-mail: ");
+            String email = in.next();
+            usuario.setEmail(email);
 
-        System.out.print("Digite sua senha: ");
-        String senha = in.next();
-        usuario.setSenha(senha);
+            System.out.print("Digite sua senha: ");
+            String senha = in.next();
+            usuario.setSenha(senha);
 
-        Usuario jogador = conector.buscarUsuario(email,senha,1);
+            jogador = conector.buscarUsuario(email,senha,1);
         
+        }
         Personagem penrsonagem = conector.buscarAvatarDoUsuario(jogador);
         
         jogador.setPersonagem(penrsonagem);
@@ -172,16 +186,15 @@ public class Dyk2
         return jogador;
     }
     
-    //public static Usuario criarJogador() throws SQLException
+    //public static Usuario criarAvatar() throws SQLException
     {
-        // criar usuario
         // buscar avatar disponiveis
         // pedir para o usuario selecionar o avatar ou criar um novo
         // se for criar o usuario tem que nomear e as habilidades sao adiquiridas de forma aleatória
         // se ele selecionar retorno com o avatar escolhido e jogador criado
     }
     
-    public static void criarUsuario(String[] args) throws SQLException
+    public static Usuario criarUsuario(String[] args) throws SQLException
     {
         Usuario usuario;
         
@@ -194,15 +207,34 @@ public class Dyk2
         usuario = conector.buscarUsuario(email,"",2);
         
         if(usuario.getCodigoUsuario()<0)
+            main(args); //volta ao menu inicial por opção do usuario
+        else if (usuario.getCodigoUsuario()>0)
         {
-            main(args);
+            return buscarJogador(usuario);
         }
-        
-        System.out.println("Parar");
-    }
-    
-    public static void reiniciar(){
-        
+        else
+        {
+            String senha, nome, sobrenome,apelido;
+            
+            System.out.println("Digite a senha: ");
+            senha = in.next();
+            usuario.setSenha(senha);
+            
+            System.out.println("Digite seu nome:");
+            nome = in.next();
+            usuario.setNomeUsuario(nome);
+            
+            System.out.println("Digite seu sobrenome:");
+            sobrenome = in.next();
+            usuario.setSobrenomeUsuario(sobrenome);
+            
+            System.out.println("Digite seu apelido:");
+            apelido = in.next();
+            usuario.setApelido(apelido);
+            
+            conector.inserirUsuario(usuario);;
+        }
+        return usuario;
     }
 }
 

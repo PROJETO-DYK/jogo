@@ -68,24 +68,26 @@ public class JDBCConector
         return null;
     }
 
-    public ResultSet criarPreparedStatement(String query, int quantidadeParamentros, String[] listaParamentros)
+    public int criarPreparedStatement(String query, int quantidadeParamentros, String[] listaParamentros)
     {
         try
         {
-            PreparedStatement stmt = conexao.prepareStatement(query, listaParamentros);
+            PreparedStatement stmt = conexao.prepareStatement(query);
 
             for (int i = 0; i < quantidadeParamentros; i++)
             {
                 stmt.setString(i + 1, listaParamentros[i]);
             }
+            
+            System.out.println(stmt);
 
-            return (ResultSet) stmt.executeQuery(query);
+            return stmt.executeUpdate();
         } catch (SQLException ex)
         {
             System.out.println("[ERRO] AO EXECUTAR QUERY " + ex);
         }
 
-        return null;
+        return 0;
     }
     //</editor-fold>
 
@@ -151,11 +153,11 @@ public class JDBCConector
         }
     }
     
-    public void criarUsuario(Usuario usuario)
+    public void inserirUsuario(Usuario usuario)
     {
-        String query = "INSERT INTO usuario\n "
-                + "(NOME_USUARIO, SOBRENOME_USUARIO, EMAIL,APELIDO_USUARIO, SENHA)\n"
-                + "VALUES (?,?,?,?,?,?)";
+        String query = "INSERT INTO usuario "
+                + "(NOME_USUARIO, SOBRENOME_USUARIO, EMAIL,APELIDO_USUARIO, SENHA)"
+                + " VALUES (?,?,?,?,?)";
 
         String args[] =
         {
@@ -191,13 +193,15 @@ public class JDBCConector
 
                 habilidades.add(new Habilidade(
                                 res.getInt("COD_HABILIDADE"),
-                                res.getString("DESC_HABILIDADE")
+                                res.getString("DESC_HABILIDADE"),
+                                false
                 ));
             } else
             {   
                 habilidades.add(new Habilidade(
                                 res.getInt("COD_HABILIDADE"),
-                                res.getString("DESC_HABILIDADE")
+                                res.getString("DESC_HABILIDADE"),
+                                false
                 ));
                 personagem = new Personagem(res.getInt("COD_PERSONAGEM"),
                                                        res.getString("NOME_PERSONAGEM"),
