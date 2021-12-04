@@ -23,7 +23,7 @@ public class Dyk2
     static ArrayList<Usuario> usuariosLogados = new ArrayList<Usuario>();
     
     
-    public static void main(String[] args) throws SQLException 
+    public static void main(String[] args) throws SQLException
     {
         conector.inciarConexao(); // ABRE CONEXAO COM BANCO
                 
@@ -148,8 +148,32 @@ public class Dyk2
         }
         
         //inicia o jogo(passando a lista de usuarios) Gladson
-                
+       
+       
+       //INICIO RANDOM//
+       jogador.
+       //FIM RANDOM//
+       
+       
+       //INICIO COMANDO PARA LIMPAR O OUTPUT (TELA DE RESPOSTA)//
+            //Ainda não achei um codigo//
+       //INICIO COMANDO PARA LIMPAR O OUTPUT (TELA DE RESPOSTA)//
+       
+       
+       //INICIO INFORMAÇÕES DOS USUARIOS//
+        System.out.println("Jogador n° " + randomnum + ", seja bem vindo!!!\n");
+        System.out.println("CARREGANDO DADOS DO USUARIO...");
+      //AQUI VOU MOSTRAR PARA O USUARIO A QUANTIDADE DE VIDA E PONTOS INICIAIS//
+      //FIM INFORMAÇÕES DOS USUARIOS//
+      
+      //INICIO PERGUNTAS//
+      //CARREGAR PERGUNTAS E RESPOSTAS DO BANCO DE DADOS EM LOOPING PARA OS JOGADORES RESPONDEREM//
+           
+      
+      
+      //FIM PERGUNTAS//
     }
+    
     
     public static int validacaoSimNao()
     {

@@ -12,7 +12,7 @@ public class Pergunta {
         this.Pergunta = Pergunta;
         this.Alternativas = Alternativas;
     }
-
+    
     public int getCodigoPergunta() {
         return CodigoPergunta;
     }
@@ -37,4 +37,4 @@ public class Pergunta {
         this.Alternativas = Alternativas;
     }
     
-}
+    }

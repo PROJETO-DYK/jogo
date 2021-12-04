@@ -1,19 +1,22 @@
 package Repository;
 
+import Util.Alternativa;
 import Util.Habilidade;
 import Util.Personagem;
 import Util.Usuario;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
+import Util.Pergunta;
+import java.util.List;
 
 public class JDBCConector
 {
     Scanner in = new Scanner(System.in);
     
     private final String URL = "jdbc:mysql://localhost:3306/dyk_db";
-    private final String USER = "admin";
-    private final String PASSWD = "12345";
+    private final String USER = "root";
+    private final String PASSWD = "Gafs1999@";
     private final String DRIVER_BANCO = "com.mysql.cj.jdbc.Driver";
 
     private Connection conexao;
@@ -217,6 +220,24 @@ public class JDBCConector
     
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Querys Perguntas e Alternativas">
+    public String buscarPergunta(int CodigoPergunta, String Pergunta, List<Alternativa> Alternativas) throws SQLException
+    {
+        Pergunta pergunta = new Pergunta();
+        String query = "select * "
+                + "COD_PERGUNTA, PERGUNTA "
+                + "from pergunta";
+         ResultSet res = criarStatement(query);
+          if (res.next())
+        {
+            pergunta.buscarPergunta(res.getInt("COD_PERGUNTA"),
+                                     res.getString("PERGUNTA"));
+
+        }else
+        {
+           return Pergunta;
+           
+        }
+    }
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Querys Gerais">
     //</editor-fold>
