@@ -1,7 +1,9 @@
 package dyk2;
 
 import Repository.JDBCConector;
+import Util.Alternativa;
 import Util.Menu;
+import Util.Pergunta;
 import Util.Personagem;
 import java.util.Scanner;
 import Util.Usuario;
@@ -20,10 +22,11 @@ public class Dyk2
     static Menu menu = new Menu();
     static JDBCConector conector = new JDBCConector();
     static Usuario usuario = new Usuario();
-    static ArrayList<Usuario> usuariosLogados = new ArrayList<Usuario>();
+    static ArrayList<Usuario> jogadores = new ArrayList<Usuario>();
+    static ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
+    static ArrayList<Alternativa> alternativas = new ArrayList<Alternativa>();
     
-    
-    public static void main(String[] args) throws SQLException
+    public static void main(String[] args) throws SQLException, InterruptedException
     {
         conector.inciarConexao(); // ABRE CONEXAO COM BANCO
                 
@@ -41,7 +44,16 @@ public class Dyk2
             switch (opcaoInicial)
             {
                 case 1 -> iniciaJogo(args);
-                case 2 -> System.out.println("opcao2");//TODO
+                case 2 -> 
+                {
+                
+                    menu.MenuDesenvolvedores();
+                    new Thread().sleep(2000);
+                    for (int i = 0; i < 100; ++i)  
+                    System.out.println();  
+                    menu.MenuInicializacao();
+                
+                }
                 case 3 -> 
                 {
                     menu.MenuRegras();
@@ -97,7 +109,7 @@ public class Dyk2
                         if (jogador.getCodigoUsuario()>0 && jogador.getPersonagem() != null)
                         {
                             jogador.setNumeroJogador(i);
-                            usuariosLogados.add(jogador);
+                            jogadores.add(jogador);
                             System.out.println("Usuario logado com sucesso!");
                             opcaoValida = true;
                         }
@@ -114,7 +126,7 @@ public class Dyk2
                         if (jogador.getCodigoUsuario()>0 && jogador.getPersonagem() != null)
                         {
                             jogador.setNumeroJogador(i);
-                            usuariosLogados.add(jogador);
+                            jogadores.add(jogador);
                             System.out.println("Usuario logado com sucesso!");
                             opcaoValida = true;
                         }
@@ -148,10 +160,10 @@ public class Dyk2
         }
         
         //inicia o jogo(passando a lista de usuarios) Gladson
-       
+        
        
        //INICIO RANDOM//
-       jogador.
+       int jogadorEscolhido = usuario.escolherUsuario(QUANTIDADE_JOGADORES);
        //FIM RANDOM//
        
        
@@ -160,17 +172,15 @@ public class Dyk2
        //INICIO COMANDO PARA LIMPAR O OUTPUT (TELA DE RESPOSTA)//
        
        
-       //INICIO INFORMAÇÕES DOS USUARIOS//
-        System.out.println("Jogador n° " + randomnum + ", seja bem vindo!!!\n");
-        System.out.println("CARREGANDO DADOS DO USUARIO...");
+      //INICIO INFORMAÇÕES DOS USUARIOS//
+      //System.out.println("Jogador n° " + randomnum + ", seja bem vindo!!!\n");
+      //System.out.println("CARREGANDO DADOS DO USUARIO...");
       //AQUI VOU MOSTRAR PARA O USUARIO A QUANTIDADE DE VIDA E PONTOS INICIAIS//
       //FIM INFORMAÇÕES DOS USUARIOS//
       
       //INICIO PERGUNTAS//
       //CARREGAR PERGUNTAS E RESPOSTAS DO BANCO DE DADOS EM LOOPING PARA OS JOGADORES RESPONDEREM//
-           
-      
-      
+         
       //FIM PERGUNTAS//
     }
     
@@ -260,5 +270,12 @@ public class Dyk2
         }
         return usuario;
     }
-}
+        static public ArrayList<Pergunta>buscarPerguntas 
+    {
+        //alternativas = conector.buscarAlternativas();
+        //BUSCAR RESPOSTA E SALVAR EM ARRAY
+        //BUSCAR PERGUNTAS E SALVAR EM ARRAY
 
+    }
+            
+}

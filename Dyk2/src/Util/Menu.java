@@ -57,4 +57,16 @@ public class Menu {
         
     }
     
+    public void MenuDesenvolvedores()
+    {
+        System.out.println("#################################################");
+        System.out.println("################ DESENVOLVEDORES ################");
+        System.out.println("#################################################\n"); 
+        
+        System.out.println("JOGO DESENVOLVIDO POR:\n");
+        System.out.println("Gladson Ameno Fernandes Silva - Cusando Ciencia da Computação - 2º Semestre");
+        System.out.println("Thiago Silva - Cursando (esqueci o seu curso) - 1º Semestre\n");
+        System.out.println("EM VIRTUDE DE UM TRABALHO NA INSTITUIÇÃO UNA DO CAMPOS CRISTIANO MACHADO\n");
+
+    }
 }

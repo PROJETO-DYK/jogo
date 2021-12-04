@@ -96,7 +96,7 @@ public class JDBCConector
 
     //<editor-fold defaultstate="collapsed" desc="Querys Jogo">
     //<editor-fold defaultstate="collapsed" desc="Querys Usuario">
-    public Usuario buscarUsuario(String email, String senha, int controleProcessamento) throws SQLException
+    public Usuario buscarUsuario(String email, String senha, int controleProcessamento) throws SQLException //parenteses vazio - alternativas arraylist<Alternativa>buscarAlternativas
     {
         Usuario usuario = new Usuario();
         /*
@@ -108,7 +108,7 @@ public class JDBCConector
         
         String query = "select * "
                 + "from usuario "
-                + "where email = '" + email + "'";
+                + "where email = '" + email + "'"; //quary sem parametro select *from alternativas 
 
         ResultSet res = criarStatement(query);
         
@@ -220,6 +220,44 @@ public class JDBCConector
     
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Querys Perguntas e Alternativas">
+    public ArrayList<Alternativa> buscarAlternativas() throws SQLException
+    {
+      
+        Arraylist<Alternativa> alternativas = new Arraylist<Alternativa>()
+        
+        String query = "select * "
+                + "from alternativa ";
+                
+        ResultSet res = criarStatement(query);
+                
+        while (res.next()
+        {
+            alternativas.add(new Alternativa(
+                             res.getInt("COD_RESPOSTA"),
+                             res.getString("RESPOSTA"),
+                             true
+            ));
+        }    
+        return null;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public String buscarPergunta(int CodigoPergunta, String Pergunta, List<Alternativa> Alternativas) throws SQLException
     {
         Pergunta pergunta = new Pergunta();

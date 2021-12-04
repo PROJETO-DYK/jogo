@@ -7,6 +7,8 @@ public class Pergunta {
     private String Pergunta;
     private List<Alternativa> Alternativas;
 
+    public Pergunta(){}
+    
     public Pergunta(int CodigoPergunta, String Pergunta, List<Alternativa> Alternativas) {
         this.CodigoPergunta = CodigoPergunta;
         this.Pergunta = Pergunta;
