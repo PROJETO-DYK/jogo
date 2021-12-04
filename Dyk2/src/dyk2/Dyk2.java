@@ -47,11 +47,11 @@ public class Dyk2
                 case 2 -> 
                 {
                 
-                    menu.MenuDesenvolvedores();
-                    new Thread().sleep(2000);
-                    for (int i = 0; i < 100; ++i)  
-                    System.out.println();  
-                    menu.MenuInicializacao();
+                    menu.MenuDesenvolvedores();         //Menu de desenvolvedores
+                    new Thread().sleep(5000);           //Tempo de espera antes de puxar o Menu Inicialização
+                    for (int i = 0; i < 100; ++i)       //Gambiarra para limpar console
+                    System.out.println();               //Gambiarra para limpar console
+                    menu.MenuInicializacao();           //Puxa menu de inicialização
                 
                 }
                 case 3 -> 
@@ -166,22 +166,19 @@ public class Dyk2
        int jogadorEscolhido = usuario.escolherUsuario(QUANTIDADE_JOGADORES);
        //FIM RANDOM//
        
-       
-       //INICIO COMANDO PARA LIMPAR O OUTPUT (TELA DE RESPOSTA)//
-            //Ainda não achei um codigo//
-       //INICIO COMANDO PARA LIMPAR O OUTPUT (TELA DE RESPOSTA)//
-       
-       
-      //INICIO INFORMAÇÕES DOS USUARIOS//
-      //System.out.println("Jogador n° " + randomnum + ", seja bem vindo!!!\n");
-      //System.out.println("CARREGANDO DADOS DO USUARIO...");
-      //AQUI VOU MOSTRAR PARA O USUARIO A QUANTIDADE DE VIDA E PONTOS INICIAIS//
-      //FIM INFORMAÇÕES DOS USUARIOS//
-      
-      //INICIO PERGUNTAS//
+       //INICIO PERGUNTAS//
       //CARREGAR PERGUNTAS E RESPOSTAS DO BANCO DE DADOS EM LOOPING PARA OS JOGADORES RESPONDEREM//
-         
+         //JOGO FAZ PERGUNTA
+         //JOGO MOSTRA ALTERNATIVAS
+         //JOGADOR SORTEADO RESPONDE                
+         //MOSTRA PONTUAÇÃO E VIDA 
+         //JOGO FAZ PERGUNTA
+         //JOGO MOSTRA ALTERNATIVAS           
+         //PROXIMO JOGADOR RESPONDE    ->    // SE JOGADOR SORTEADO FOR IGUAL A 1, PROXIMO JOGADOR E IGUAL A JOGADOR SORTEADO MAIS 1; 
+                                            //SE JOGADOR SORTEADO FOR IGUAL A 2, PROXIMO JOGADOR SORTEADO MENOS 1 
+         //MOSTRA PONTUAÇÃO E VIDA
       //FIM PERGUNTAS//
+      
     }
     
     
