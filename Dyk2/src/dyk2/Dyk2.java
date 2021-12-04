@@ -160,7 +160,7 @@ public class Dyk2
         }
         
         //inicia o jogo(passando a lista de usuarios) Gladson
-        
+        buscarPerguntasEAlternativas();
        
        //INICIO RANDOM//
        int jogadorEscolhido = usuario.escolherUsuario(QUANTIDADE_JOGADORES);
@@ -200,7 +200,7 @@ public class Dyk2
     
     public static Usuario buscarJogador(Usuario jogador) throws SQLException
     {
-        if (jogador == null)
+        if (jogador.getNomeUsuario() == null)
         {
             System.out.print("Digite o seu e-mail: ");
             String email = in.next();
@@ -271,7 +271,7 @@ public class Dyk2
         return usuario;
     }
     
-    static public ArrayList<Pergunta>buscarPerguntasEAlternativas() throws SQLException
+    static public void buscarPerguntasEAlternativas() throws SQLException
     {
         
         ArrayList<Alternativa> generica = new ArrayList<Alternativa>();
@@ -294,8 +294,6 @@ public class Dyk2
             pergunta.setAlternativas(generica);
             generica.clear();
         }
-        
-        return perguntas;
 
     }
             
