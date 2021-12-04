@@ -1,8 +1,6 @@
 package Util;
 
-import Repository.JDBCConector;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Usuario {
@@ -113,6 +111,15 @@ public class Usuario {
         this.Apelido = Apelido;
         this.Senha = Senha;
         this.UsuarioAtivo = UsuarioAtivo;
+    }
+    
+    public int escolherUsuario(int quantidadeDeJogadores)
+    {
+       Random rand = new Random(); 
+       int usuarioEscolhido = rand.nextInt(quantidadeDeJogadores)+1;
+       System.out.println("O jogador Nº: " + usuarioEscolhido + " vai começar respondendo as perguntas!!");
+       return usuarioEscolhido;
+       
     }
     
 }
