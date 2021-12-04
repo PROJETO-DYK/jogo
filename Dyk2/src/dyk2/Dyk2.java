@@ -85,7 +85,7 @@ public class Dyk2
     
     
     
-    public static void iniciaJogo(String[] args) throws SQLException
+    public static void iniciaJogo(String[] args) throws SQLException, InterruptedException
     {
         System.out.println("Lembrando que o DYK é um jogo para jogar em duplas!\n");
         
@@ -228,7 +228,7 @@ public class Dyk2
         // se ele selecionar retorno com o avatar escolhido e jogador criado
     }
     
-    public static Usuario criarUsuario(String[] args) throws SQLException
+    public static Usuario criarUsuario(String[] args) throws SQLException, InterruptedException
     {
         Usuario usuario;
         
@@ -270,11 +270,32 @@ public class Dyk2
         }
         return usuario;
     }
-        static public ArrayList<Pergunta>buscarPerguntas 
+    
+    static public ArrayList<Pergunta>buscarPerguntasEAlternativas() throws SQLException
     {
-        //alternativas = conector.buscarAlternativas();
-        //BUSCAR RESPOSTA E SALVAR EM ARRAY
-        //BUSCAR PERGUNTAS E SALVAR EM ARRAY
+        
+        ArrayList<Alternativa> generica = new ArrayList<Alternativa>();
+        
+        alternativas = conector.buscarAlternativas();
+        
+        perguntas = conector.buscarPerguntas();
+        
+        for (Pergunta pergunta : perguntas)
+        {
+            
+            for(Alternativa alternativa : alternativas)
+            {
+                
+                if (alternativa.getCodigoPergunta() == pergunta.getCodigoPergunta())
+                {
+                    generica.add(alternativa);
+                }
+            }
+            pergunta.setAlternativas(generica);
+            generica.clear();
+        }
+        
+        return perguntas;
 
     }
             

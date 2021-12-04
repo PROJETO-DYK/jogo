@@ -223,58 +223,44 @@ public class JDBCConector
     public ArrayList<Alternativa> buscarAlternativas() throws SQLException
     {
       
-        Arraylist<Alternativa> alternativas = new Arraylist<Alternativa>()
+        ArrayList<Alternativa> alternativas = new ArrayList<Alternativa>();
         
-        String query = "select * "
-                + "from alternativa ";
+        String query = "select r.*, pr.COD_PERGUNTA "
+                     + "from resposta r "
+                     + "join pergunta_resposta pr on pr.COD_RESPOSTA = r.COD_RESPOSTA "
+                     + "order by pr.COD_PERGUNTA;";
                 
         ResultSet res = criarStatement(query);
                 
-        while (res.next()
+        while (res.next())
         {
             alternativas.add(new Alternativa(
                              res.getInt("COD_RESPOSTA"),
-                             res.getString("RESPOSTA"),
-                             true
+                             res.getInt("COD_PERGUNTA"),
+                             res.getString("RESPOSTA")
             ));
         }    
-        return null;
+        return alternativas;
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    public String buscarPergunta(int CodigoPergunta, String Pergunta, List<Alternativa> Alternativas) throws SQLException
+        
+    public ArrayList<Pergunta> buscarPerguntas() throws SQLException
     {
-        Pergunta pergunta = new Pergunta();
+        ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
+        
         String query = "select * "
-                + "COD_PERGUNTA, PERGUNTA "
-                + "from pergunta";
+                     + "from pergunta";
+        
          ResultSet res = criarStatement(query);
-          if (res.next())
+         
+         while (res.next())
         {
-            pergunta.buscarPergunta(res.getInt("COD_PERGUNTA"),
-                                     res.getString("PERGUNTA"));
-
-        }else
-        {
-           return Pergunta;
-           
-        }
+            perguntas.add(new Pergunta(
+                             res.getInt("COD_PERGUNTA"),
+                             res.getString("PERGUNTA")
+            ));
+        }    
+         
+         return perguntas;
     }
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Querys Gerais">

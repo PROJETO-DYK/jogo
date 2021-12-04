@@ -9,7 +9,7 @@ public class Pergunta {
 
     public Pergunta(){}
     
-    public Pergunta(int CodigoPergunta, String Pergunta, List<Alternativa> Alternativas) {
+    public Pergunta(int CodigoPergunta, String Pergunta) {
         this.CodigoPergunta = CodigoPergunta;
         this.Pergunta = Pergunta;
         this.Alternativas = Alternativas;
