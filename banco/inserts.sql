@@ -109,3 +109,23 @@ INSERT INTO pergunta_resposta
 (10,39,true),
 (10,40,false);
 
+INSERT INTO personagem (PERSONAGEM)
+VALUES
+('Naruto'),
+('Boruto'),
+('Sonic'),
+('Deku'),
+('Saitama');
+
+INSERT INTO habilidade(desc_habilidade,cod_personagem) VALUES
+('Sair do jogo sem perder vida',1),
+('Retirar 10pts do Adversario',2),
+('Duplicar o valor de pts da pergunta',3),
+('Retirar pontos de vida de Adversario',4),
+('Pular pergunta',5),
+('Ganhar 10 de vida',1),
+('Ganhar 20 de vida',2),
+('Perder 10 de vida e ganhar 10 pontos',3),
+('Perder 20 pontos e ganhar 20 de vida',4),
+('Modo Deus',5);
+
