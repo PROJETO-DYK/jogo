@@ -7,7 +7,7 @@ public class Alternativa {
 
     public Alternativa(int CodigoResposta, int CodigoPergunta, String Resposta) {
         this.CodigoResposta = CodigoResposta;
-        this.CodigoPergunta = CodigoResposta;
+        this.CodigoPergunta = CodigoPergunta;
         this.Resposta = Resposta;
     }
     
@@ -38,5 +38,4 @@ public class Alternativa {
     {
         this.CodigoPergunta = CodigoPergunta;
     }
-    
 }

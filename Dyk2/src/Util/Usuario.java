@@ -1,5 +1,8 @@
 package Util;
 
+import Repository.JDBCConector;
+import static dyk2.Dyk2.main;
+import java.sql.SQLException;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -120,6 +123,71 @@ public class Usuario {
        System.out.println("O jogador Nº: " + usuarioEscolhido + " vai começar respondendo as perguntas!!");
        return usuarioEscolhido;
        
+    }
+    
+    public static Usuario criarUsuario(String[] args,JDBCConector conector) throws SQLException, InterruptedException
+    {
+        Usuario usuario;
+        
+        System.out.println("Bem vindo a tela de cadastro de Usuario!\n");
+        
+        System.out.print("Para começar, digite seu e-mail: ");
+        
+        String email = in.next();
+        
+        usuario = conector.buscarUsuario(email,"",2);
+        
+        if(usuario.getCodigoUsuario()<0)
+            main(args); //volta ao menu inicial por opção do usuario
+        else if (usuario.getCodigoUsuario()>0)
+        {
+            return buscarJogador(usuario,conector);
+        }
+        else
+        {
+            String senha, nome, sobrenome,apelido;
+            
+            System.out.println("Digite a senha: ");
+            senha = in.next();
+            usuario.setSenha(senha);
+            
+            System.out.println("Digite seu nome:");
+            nome = in.next();
+            usuario.setNomeUsuario(nome);
+            
+            System.out.println("Digite seu sobrenome:");
+            sobrenome = in.next();
+            usuario.setSobrenomeUsuario(sobrenome);
+            
+            System.out.println("Digite seu apelido:");
+            apelido = in.next();
+            usuario.setApelido(apelido);
+            
+            conector.inserirUsuario(usuario);;
+        }
+        return usuario;
+    }
+    
+        public static Usuario buscarJogador(Usuario jogador,JDBCConector conector) throws SQLException
+    {
+        if (jogador.getNomeUsuario() == null)
+        {
+            System.out.print("Digite o seu e-mail: ");
+            String email = in.next();
+            jogador.setEmail(email);
+
+            System.out.print("Digite sua senha: ");
+            String senha = in.next();
+            jogador.setSenha(senha);
+
+            jogador = conector.buscarUsuario(email,senha,1);
+        
+        }
+        Personagem penrsonagem = conector.buscarAvatarDoUsuario(jogador);
+        
+        jogador.setPersonagem(penrsonagem);
+        
+        return jogador;
     }
     
 }

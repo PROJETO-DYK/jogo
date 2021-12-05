@@ -8,7 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Util.Pergunta;
-import java.util.List;
 
 public class JDBCConector
 {

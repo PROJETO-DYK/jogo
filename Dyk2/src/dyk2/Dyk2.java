@@ -24,7 +24,6 @@ public class Dyk2
     static Usuario usuario = new Usuario();
     static ArrayList<Usuario> jogadores = new ArrayList<Usuario>();
     static ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
-    static ArrayList<Alternativa> alternativas = new ArrayList<Alternativa>();
     
     public static void main(String[] args) throws SQLException, InterruptedException
     {
@@ -89,6 +88,8 @@ public class Dyk2
     {
         System.out.println("Lembrando que o DYK é um jogo para jogar em duplas!\n");
         
+        perguntas = Pergunta.buscarPerguntas(conector);
+        
         for (int i = 1; i <= QUANTIDADE_JOGADORES; i++){
             
             System.out.println("Jogador n° " + i + ", seja bem vindo!!!\n");
@@ -104,39 +105,15 @@ public class Dyk2
                 switch (opcaoDesejada){
                     case 1 ->//Usuario cadastrado
                     {
-                        jogador = buscarJogador(jogador);
+                        jogador = jogador.buscarJogador(jogador,conector);
                                                 
-                        if (jogador.getCodigoUsuario()>0 && jogador.getPersonagem() != null)
-                        {
-                            jogador.setNumeroJogador(i);
-                            jogadores.add(jogador);
-                            System.out.println("Usuario logado com sucesso!");
-                            opcaoValida = true;
-                        }
-                        else
-                        {
-                            System.out.println("Não foi possível recuperar o seu Personagem");
-                            //Criar fluxo para cadastro de Personagem
-                        }
+                        opcaoValida = validarSeJogadorCompleto(jogador,i);
                     }
                     case 2 ->
                     {
-                        jogador = criarUsuario(args);
+                        jogador = jogador.criarUsuario(args,conector);
                         
-                        if (jogador.getCodigoUsuario()>0 && jogador.getPersonagem() != null)
-                        {
-                            jogador.setNumeroJogador(i);
-                            jogadores.add(jogador);
-                            System.out.println("Usuario logado com sucesso!");
-                            opcaoValida = true;
-                        }
-                        else
-                        {
-                            System.out.println("Não foi possível recuperar o seu Personagem");
-                            //Criar fluxo para cadastro de Personagem
-                        }
-                        
-                        opcaoValida = true;
+                        opcaoValida = validarSeJogadorCompleto(jogador,i);
                     }
                     case 3 ->
                     {
@@ -159,10 +136,8 @@ public class Dyk2
             
         }
         
-        //inicia o jogo(passando a lista de usuarios) Gladson
-        buscarPerguntasEAlternativas();
-       
-       //INICIO RANDOM//
+        
+        
        int jogadorEscolhido = usuario.escolherUsuario(QUANTIDADE_JOGADORES);
        //FIM RANDOM//
        
@@ -182,116 +157,29 @@ public class Dyk2
     }
     
     
-    public static int validacaoSimNao()
+    public static boolean validarSeJogadorCompleto(Usuario jogador, int numeroJogador)
     {
-        int validacao = 0;
-        do
+        if (jogador.getCodigoUsuario()>0 && jogador.getPersonagem() != null)
         {
-            System.out.println("Digite 1-SIM 2-NÃO: ");
-            validacao = in.nextInt();
+            jogador.setNumeroJogador(numeroJogador);
+            jogadores.add(jogador);
+            System.out.println("Usuario logado com sucesso!");
+            return true;
         }
-        while (validacao > 2 || validacao < 1  );
-                
-        return validacao; 
+        else
+        {
+            System.out.println("Não foi possível recuperar o seu Personagem");//TODO: Logica para criar personagem
+            return true;
+        }
     }
     
-    public static Usuario buscarJogador(Usuario jogador) throws SQLException
-    {
-        if (jogador.getNomeUsuario() == null)
-        {
-            System.out.print("Digite o seu e-mail: ");
-            String email = in.next();
-            usuario.setEmail(email);
 
-            System.out.print("Digite sua senha: ");
-            String senha = in.next();
-            usuario.setSenha(senha);
-
-            jogador = conector.buscarUsuario(email,senha,1);
-        
-        }
-        Personagem penrsonagem = conector.buscarAvatarDoUsuario(jogador);
-        
-        jogador.setPersonagem(penrsonagem);
-        
-        return jogador;
-    }
     
     //public static Usuario criarAvatar() throws SQLException
-    {
+    //{
         // buscar avatar disponiveis
         // pedir para o usuario selecionar o avatar ou criar um novo
         // se for criar o usuario tem que nomear e as habilidades sao adiquiridas de forma aleatória
         // se ele selecionar retorno com o avatar escolhido e jogador criado
-    }
-    
-    public static Usuario criarUsuario(String[] args) throws SQLException, InterruptedException
-    {
-        Usuario usuario;
-        
-        System.out.println("Bem vindo a tela de cadastro de Usuario!\n");
-        
-        System.out.print("Para começar, digite seu e-mail: ");
-        
-        String email = in.next();
-        
-        usuario = conector.buscarUsuario(email,"",2);
-        
-        if(usuario.getCodigoUsuario()<0)
-            main(args); //volta ao menu inicial por opção do usuario
-        else if (usuario.getCodigoUsuario()>0)
-        {
-            return buscarJogador(usuario);
-        }
-        else
-        {
-            String senha, nome, sobrenome,apelido;
-            
-            System.out.println("Digite a senha: ");
-            senha = in.next();
-            usuario.setSenha(senha);
-            
-            System.out.println("Digite seu nome:");
-            nome = in.next();
-            usuario.setNomeUsuario(nome);
-            
-            System.out.println("Digite seu sobrenome:");
-            sobrenome = in.next();
-            usuario.setSobrenomeUsuario(sobrenome);
-            
-            System.out.println("Digite seu apelido:");
-            apelido = in.next();
-            usuario.setApelido(apelido);
-            
-            conector.inserirUsuario(usuario);;
-        }
-        return usuario;
-    }
-    
-    static public void buscarPerguntasEAlternativas() throws SQLException
-    {
-        
-        ArrayList<Alternativa> generica = new ArrayList<Alternativa>();
-        
-        alternativas = conector.buscarAlternativas();
-        
-        perguntas = conector.buscarPerguntas();
-        
-        for (Pergunta pergunta : perguntas)
-        {
-            
-            for(Alternativa alternativa : alternativas)
-            {
-                
-                if (alternativa.getCodigoPergunta() == pergunta.getCodigoPergunta())
-                {
-                    generica.add(alternativa);
-                }
-            }
-            pergunta.setAlternativas(generica);
-            generica.clear();
-        }
-
-    }
-            
+    //}            
 }

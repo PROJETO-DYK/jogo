@@ -1,5 +1,8 @@
 package Util;
 
+import Repository.JDBCConector;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pergunta {
@@ -39,4 +42,31 @@ public class Pergunta {
         this.Alternativas = Alternativas;
     }
     
+    static public ArrayList<Pergunta> buscarPerguntas(JDBCConector conector) throws SQLException
+    {
+        
+        ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
+        ArrayList<Pergunta> novasPerguntas = new ArrayList<Pergunta>();
+        ArrayList<Alternativa> alternativas = new ArrayList<Alternativa>();
+        ArrayList<Alternativa> generica = new ArrayList<Alternativa>();
+        
+        alternativas = conector.buscarAlternativas();
+        
+        perguntas = conector.buscarPerguntas();
+        
+        for (Pergunta pergunta : perguntas)
+        {
+            generica.clear();
+            for(Alternativa alternativa : alternativas)
+            {
+                if (alternativa.getCodigoPergunta() == pergunta.getCodigoPergunta())
+                {                    
+                    generica.add(alternativa);
+                }
+            }
+            pergunta.setAlternativas(generica);
+            novasPerguntas.add(pergunta);
+        }
+        return novasPerguntas;
     }
+}
