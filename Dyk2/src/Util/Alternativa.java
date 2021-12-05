@@ -4,11 +4,14 @@ public class Alternativa {
      private int CodigoResposta;
      private int CodigoPergunta;
      private String Resposta;
+     private boolean Correta;
 
-    public Alternativa(int CodigoResposta, int CodigoPergunta, String Resposta) {
+    public Alternativa(int CodigoResposta, int CodigoPergunta, String Resposta, boolean Correta)
+    {
         this.CodigoResposta = CodigoResposta;
         this.CodigoPergunta = CodigoPergunta;
         this.Resposta = Resposta;
+        this.Correta = Correta;
     }
     
     public Alternativa(){}
@@ -38,4 +41,16 @@ public class Alternativa {
     {
         this.CodigoPergunta = CodigoPergunta;
     }
+
+    public boolean isCorreta()
+    {
+        return Correta;
+    }
+
+    public void setCorreta(boolean Correta)
+    {
+        this.Correta = Correta;
+    }
+    
+    
 }

@@ -4,6 +4,7 @@ import Repository.JDBCConector;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Pergunta {
     private int CodigoPergunta;
@@ -69,4 +70,7 @@ public class Pergunta {
         }
         return novasPerguntas;
     }
+    
+  
+    
 }

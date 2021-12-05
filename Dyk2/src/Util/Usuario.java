@@ -180,8 +180,6 @@ public class Usuario {
             
             usuario.setPersonagem(personagemEscolhido);
             
-            conector.inserirUsuario(usuario);
-            
             conector.buscarHabilidadesPersonagem(usuario);
             
             conector.inserirUsuario(usuario);

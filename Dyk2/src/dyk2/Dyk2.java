@@ -8,6 +8,8 @@ import java.util.Scanner;
 import Util.Usuario;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class Dyk2 
 {
@@ -32,7 +34,7 @@ public class Dyk2
         System.out.println("Seja Bem Vindo(a) ao DYK, seu jogo de Perguntas e respostas!!!\n");
         
         menu.MenuInicializacao();
-                
+        
         int opcaoInicial = 0;
         do 
         {
@@ -88,61 +90,95 @@ public class Dyk2
     
     public static void iniciaJogo(String[] args) throws SQLException, InterruptedException
     {
-        System.out.println("Lembrando que o DYK é um jogo para jogar em duplas!\n");
-        
-        for (int i = 1; i <= QUANTIDADE_JOGADORES; i++){
-            
-            System.out.println("Jogador n° " + i + ", seja bem vindo!!!\n");
-            
-            boolean opcaoValida = false;
-            do 
-            {
-                Usuario jogador = new Usuario();
-                menu.MenuInicial();
-                System.out.print("Digite a opção desejada: ");
-                int opcaoDesejada = in.nextInt();
-                
-                switch (opcaoDesejada){
-                    case 1 ->//Usuario cadastrado
-                    {
-                        jogador = Usuario.buscarJogador(jogador,conector);
-                                                
-                        opcaoValida = validarSeJogadorCompleto(jogador,i);
-                    }
-                    case 2 ->//Criar Usuario
-                    {
-                        Personagem personagemEscolhido = new Personagem();
-                        
-                        personagemEscolhido = personagemEscolhido.escolherPersonagem(conector);
-                        
-                        jogador = Usuario.criarUsuario(args, personagemEscolhido, conector);
-                        
-                        opcaoValida = validarSeJogadorCompleto(jogador,i);
-                    }
-                    case 3 ->
-                    {
-                        System.out.println("chamar metodo para ranking");//TODO: Logica
-                        opcaoValida = true;
-                    }
-                    case 0 -> 
-                    {
-                        menu.MenuEncerramento();
-                        conector.encerrarConexao();
-                        System.exit(0);
-                    }
-                    default -> 
-                    {
-                        System.out.println("\n Opção inválida digite novamente!");
-                    }
-                }
-            }
-            while (!opcaoValida);
-            
-        }
+//        System.out.println("Lembrando que o DYK é um jogo para jogar em duplas!\n");
+//        
+//        for (int i = 1; i <= QUANTIDADE_JOGADORES; i++){
+//            
+//            System.out.println("Jogador n° " + i + ", seja bem vindo!!!\n");
+//            
+//            boolean opcaoValida = false;
+//            do 
+//            {
+//                Usuario jogador = new Usuario();
+//                menu.MenuInicial();
+//                System.out.print("Digite a opção desejada: ");
+//                int opcaoDesejada = in.nextInt();
+//                
+//                switch (opcaoDesejada){
+//                    case 1 ->//Usuario cadastrado
+//                    {
+//                        jogador = Usuario.buscarJogador(jogador,conector);
+//                                                
+//                        opcaoValida = validarSeJogadorCompleto(jogador,i);
+//                        //opcaoValida=true;
+//                    }
+//                    case 2 ->//Criar Usuario
+//                    {
+//                        Personagem personagemEscolhido = new Personagem();
+//                        
+//                        personagemEscolhido = personagemEscolhido.escolherPersonagem(conector);
+//                        
+//                        jogador = Usuario.criarUsuario(args, personagemEscolhido, conector);
+//                        
+//                        opcaoValida = validarSeJogadorCompleto(jogador,i);
+//                    }
+//                    case 3 ->
+//                    {
+//                        System.out.println("chamar metodo para ranking");//TODO: Logica
+//                        opcaoValida = true;
+//                    }
+//                    case 0 -> 
+//                    {
+//                        menu.MenuEncerramento();
+//                        conector.encerrarConexao();
+//                        System.exit(0);
+//                    }
+//                    default -> 
+//                    {
+//                        System.out.println("\n Opção inválida digite novamente!");
+//                    }
+//                }
+//            }
+//            while (!opcaoValida);
+//            
+//        }
         
         perguntas = Pergunta.buscarPerguntas(conector);
         
        int jogadorEscolhido = usuario.escolherUsuario(QUANTIDADE_JOGADORES);
+       
+       int count = 0;
+       while(!perguntas.isEmpty())
+       {
+           if (count == 0)
+           {
+               //System.out.println(jogadores.get(jogadorEscolhido).getNumeroJogador() + " você irá iniciar o jogo!");
+           }
+           int perguntaEscolhida = escolherPegunta(perguntas.size());
+           
+           System.out.println("Pergunta n° " + (count +1)+ " " + perguntas.get(perguntaEscolhida).getPergunta());
+           
+           System.out.println(perguntas.get(perguntaEscolhida).getAlternativas().get(0).getResposta());
+           //selecionarPergunta()
+           //logica de pergunta
+           int alternativa = 1;
+           for (var resposta : perguntas.get(perguntaEscolhida).getAlternativas()){
+               System.out.println(alternativa + " - " +resposta.getResposta());
+               alternativa++;
+           }
+           System.out.print("Digite a resposta: ");
+           int resposta = in.nextInt();
+           
+           if (perguntas.get(perguntaEscolhida).getAlternativas().get(resposta).isCorreta())
+           {
+               System.out.println("Correta");
+           }
+           else
+           {
+               System.out.println("Errada");
+           }
+           count++;    
+       }
        
        //INICIO PERGUNTAS//
       //CARREGAR PERGUNTAS E RESPOSTAS DO BANCO DE DADOS EM LOOPING PARA OS JOGADORES RESPONDEREM//
@@ -175,7 +211,13 @@ public class Dyk2
             return true;
         }
     }
-    
+    public static int escolherPegunta(int quantidadeDeJogadores)
+    {
+       Random rand = new Random(); 
+       int perguntaEscolhida = rand.nextInt(quantidadeDeJogadores);
+       return perguntaEscolhida;
+       
+    }
     public static void clearConsole() throws InterruptedException
     {
         for (int i = 0; i < 100; ++i)

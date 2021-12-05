@@ -291,7 +291,7 @@ public class JDBCConector
       
         ArrayList<Alternativa> alternativas = new ArrayList<Alternativa>();
         
-        String query = "select r.*, pr.COD_PERGUNTA "
+        String query = "select r.*, pr.COD_PERGUNTA,pr.IND_RESPOSTA_CORRETA "
                      + "from resposta r "
                      + "join pergunta_resposta pr on pr.COD_RESPOSTA = r.COD_RESPOSTA "
                      + "order by pr.COD_PERGUNTA;";
@@ -303,7 +303,8 @@ public class JDBCConector
             alternativas.add(new Alternativa(
                              res.getInt("COD_RESPOSTA"),
                              res.getInt("COD_PERGUNTA"),
-                             res.getString("RESPOSTA")
+                             res.getString("RESPOSTA"),
+                             res.getBoolean("IND_RESPOSTA_CORRETA")
             ));
         }    
         return alternativas;
