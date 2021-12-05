@@ -15,7 +15,8 @@ public class Usuario {
     private String Senha;
     private boolean UsuarioAtivo;
     private int NumeroJogador;
-    private Personagem personagem; 
+    private int CodigoPersonagem;
+    private Personagem personagem;
     
     static Scanner in = new Scanner(System.in);
     
@@ -106,14 +107,28 @@ public class Usuario {
         this.personagem = personagem;
     }
     
-    public void preencherUsuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo) {
-        this.CodigoUsuario = CodigoUsuario;
+    public Personagem getCodigoPersonagem()
+    {
+        return personagem;
+    }
+
+    public void setCodigoPersonagem(Personagem personagem)
+    {
+        this.personagem = personagem;
+    }
+    
+    public Usuario preencherUsuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo,int CodigoPersonagem) {
+        Personagem p = new Personagem();
+        this.CodigoUsuario = CodigoUsuario;        
         this.NomeUsuario = NomeUsuario;
         this.SobrenomeUsuario = SobrenomeUsuario;
         this.Email = Email;
         this.Apelido = Apelido;
         this.Senha = Senha;
         this.UsuarioAtivo = UsuarioAtivo;
+        this.CodigoPersonagem = CodigoPersonagem; 
+        
+        return this;
     }
     
     public int escolherUsuario(int quantidadeDeJogadores)
@@ -125,7 +140,7 @@ public class Usuario {
        
     }
     
-    public static Usuario criarUsuario(String[] args,JDBCConector conector) throws SQLException, InterruptedException
+    public static Usuario criarUsuario(String[] args,Personagem personagemEscolhido,JDBCConector conector) throws SQLException, InterruptedException
     {
         Usuario usuario;
         
@@ -163,7 +178,13 @@ public class Usuario {
             apelido = in.next();
             usuario.setApelido(apelido);
             
-            conector.inserirUsuario(usuario);;
+            usuario.setPersonagem(personagemEscolhido);
+            
+            conector.inserirUsuario(usuario);
+            
+            conector.buscarHabilidadesPersonagem(usuario);
+            
+            conector.inserirUsuario(usuario);
         }
         return usuario;
     }

@@ -1,6 +1,10 @@
 package Util;
 
+import Repository.JDBCConector;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Personagem {
     private int IdPersonagem;
@@ -8,12 +12,21 @@ public class Personagem {
     private List<Habilidade> Habilidades;
     private Float TempoVida;
     private boolean IndicadorEscolhido;
+    
+    Scanner in = new Scanner(System.in);
 
     public Personagem(int IdPersonagem, String NomePersonagem, List<Habilidade> Habilidades, Float TempoVida, boolean IndicadorEscolhido)
     {
         this.IdPersonagem = IdPersonagem;
         this.NomePersonagem = NomePersonagem;
         this.Habilidades = Habilidades;
+        this.TempoVida = TempoVida;
+        this.IndicadorEscolhido = IndicadorEscolhido;
+    }
+    public Personagem(int IdPersonagem, String NomePersonagem, Float TempoVida, boolean IndicadorEscolhido)
+    {
+        this.IdPersonagem = IdPersonagem;
+        this.NomePersonagem = NomePersonagem;
         this.TempoVida = TempoVida;
         this.IndicadorEscolhido = IndicadorEscolhido;
     }
@@ -59,5 +72,21 @@ public class Personagem {
         this.IndicadorEscolhido = IndicadorEscolhido;
     }
     
+    public Personagem escolherPersonagem(JDBCConector conector) throws SQLException
+    {
+        ArrayList<Personagem> personagens = new ArrayList<Personagem>();
+        
+        personagens = conector.buscarPersonagens();
+        
+        System.out.println("Escolha o pesonagem:");
+        for (Personagem personagem : personagens)
+        {
+            System.out.println(personagem.getIdPersonagem()+ " - " + personagem.getNomePersonagem());
+        }
+        
+        int personagemEscolhido = in.nextInt();
+        
+        return personagens.get(personagemEscolhido-1);
+    }
     
 }

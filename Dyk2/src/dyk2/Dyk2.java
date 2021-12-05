@@ -1,7 +1,6 @@
 package dyk2;
 
 import Repository.JDBCConector;
-import Util.Alternativa;
 import Util.Menu;
 import Util.Pergunta;
 import Util.Personagem;
@@ -42,15 +41,18 @@ public class Dyk2
             
             switch (opcaoInicial)
             {
-                case 1 -> iniciaJogo(args);
+                case 1 -> 
+                {
+                    clearConsole();
+                    iniciaJogo(args);
+                }
                 case 2 -> 
                 {
                 
-                    menu.MenuDesenvolvedores();         //Menu de desenvolvedores
-                    new Thread().sleep(5000);           //Tempo de espera antes de puxar o Menu Inicialização
-                    for (int i = 0; i < 100; ++i)       //Gambiarra para limpar console
-                    System.out.println();               //Gambiarra para limpar console
-                    menu.MenuInicializacao();           //Puxa menu de inicialização
+                    menu.MenuDesenvolvedores();
+                    new Thread().sleep(5000);
+                    clearConsole();
+                    menu.MenuInicializacao();
                 
                 }
                 case 3 -> 
@@ -80,15 +82,13 @@ public class Dyk2
             System.out.println("Fim de jogo!");
         
         conector.encerrarConexao();
-    }//falta preenche o item 2 do menu
+    }
     
     
     
     public static void iniciaJogo(String[] args) throws SQLException, InterruptedException
     {
         System.out.println("Lembrando que o DYK é um jogo para jogar em duplas!\n");
-        
-        perguntas = Pergunta.buscarPerguntas(conector);
         
         for (int i = 1; i <= QUANTIDADE_JOGADORES; i++){
             
@@ -105,13 +105,17 @@ public class Dyk2
                 switch (opcaoDesejada){
                     case 1 ->//Usuario cadastrado
                     {
-                        jogador = jogador.buscarJogador(jogador,conector);
+                        jogador = Usuario.buscarJogador(jogador,conector);
                                                 
                         opcaoValida = validarSeJogadorCompleto(jogador,i);
                     }
-                    case 2 ->
+                    case 2 ->//Criar Usuario
                     {
-                        jogador = jogador.criarUsuario(args,conector);
+                        Personagem personagemEscolhido = new Personagem();
+                        
+                        personagemEscolhido = personagemEscolhido.escolherPersonagem(conector);
+                        
+                        jogador = Usuario.criarUsuario(args, personagemEscolhido, conector);
                         
                         opcaoValida = validarSeJogadorCompleto(jogador,i);
                     }
@@ -136,10 +140,9 @@ public class Dyk2
             
         }
         
-        
+        perguntas = Pergunta.buscarPerguntas(conector);
         
        int jogadorEscolhido = usuario.escolherUsuario(QUANTIDADE_JOGADORES);
-       //FIM RANDOM//
        
        //INICIO PERGUNTAS//
       //CARREGAR PERGUNTAS E RESPOSTAS DO BANCO DE DADOS EM LOOPING PARA OS JOGADORES RESPONDEREM//
@@ -173,13 +176,10 @@ public class Dyk2
         }
     }
     
-
-    
-    //public static Usuario criarAvatar() throws SQLException
-    //{
-        // buscar avatar disponiveis
-        // pedir para o usuario selecionar o avatar ou criar um novo
-        // se for criar o usuario tem que nomear e as habilidades sao adiquiridas de forma aleatória
-        // se ele selecionar retorno com o avatar escolhido e jogador criado
-    //}            
+    public static void clearConsole() throws InterruptedException
+    {
+        for (int i = 0; i < 100; ++i)
+            System.out.println();    
+    }
+      
 }

@@ -70,13 +70,13 @@ public class JDBCConector
         return null;
     }
 
-    public int criarPreparedStatement(String query, int quantidadeParamentros, String[] listaParamentros)
+    public int criarPreparedStatement(String query, int quantidadeParametros, String[] listaParamentros)
     {
         try
         {
             PreparedStatement stmt = conexao.prepareStatement(query);
 
-            for (int i = 0; i < quantidadeParamentros; i++)
+            for (int i = 0; i < quantidadeParametros; i++)
             {
                 stmt.setString(i + 1, listaParamentros[i]);
             }
@@ -113,13 +113,14 @@ public class JDBCConector
         
         if (res.next())
         {
-            usuario.preencherUsuario(res.getInt("COD_USUARIO"),
+            usuario = usuario.preencherUsuario(res.getInt("COD_USUARIO"),
                                      res.getString("NOME_USUARIO"),
                                      res.getString("SOBRENOME_USUARIO"),
                                      res.getString("EMAIL"),
                                      res.getString("APELIDO_USUARIO"),
                                      res.getString("SENHA"),
-                                     res.getBoolean("IND_ATIVO"));
+                                     res.getBoolean("IND_ATIVO"),
+                                     res.getInt("COD_PERSONAGEM"));
 
             validarSeSenhaEstaCorreta(senha, res,controleProcessamento,usuario);
         }else
@@ -155,22 +156,32 @@ public class JDBCConector
         }
     }
     
-    public void inserirUsuario(Usuario usuario)
+    public int inserirUsuario(Usuario usuario)
     {
         String query = "INSERT INTO usuario "
-                + "(NOME_USUARIO, SOBRENOME_USUARIO, EMAIL,APELIDO_USUARIO, SENHA)"
-                + " VALUES (?,?,?,?,?)";
+                + "(NOME_USUARIO, SOBRENOME_USUARIO, EMAIL,APELIDO_USUARIO, SENHA, COD_PERSONAGEM)"
+                + " VALUES (?,?,?,?,?,?)";
 
-        String args[] =
+       try
+       {
+            PreparedStatement stmt = conexao.prepareStatement(query);
+
+            stmt.setString(1, usuario.getNomeUsuario());
+            stmt.setString(2, usuario.getNomeUsuario());
+            stmt.setString(3, usuario.getNomeUsuario());
+            stmt.setString(4, usuario.getNomeUsuario());
+            stmt.setString(5, usuario.getNomeUsuario());
+            stmt.setInt(6, usuario.getPersonagem().getIdPersonagem());
+            
+            return stmt.executeUpdate();
+            
+            
+        } catch (SQLException ex)
         {
-            usuario.getNomeUsuario(), 
-            usuario.getSobrenomeUsuario(), 
-            usuario.getEmail(), 
-            usuario.getApelido(), 
-            usuario.getSenha()
-        };
+            System.out.println("[ERRO] AO EXECUTAR QUERY " + ex);
+        }
 
-        criarPreparedStatement(query, args.length, args);
+        return 0;
 
     }
 
@@ -183,9 +194,9 @@ public class JDBCConector
         
         String query = "SELECT P.COD_PERSONAGEM, P.NOME_PERSONAGEM, P.TEMPO_VIDA, P. IND_ESCOLHIDO, H.COD_HABILIDADE,H.DESC_HABILIDADE "
                 + "from personagem P "
-                + "JOIN habilidade_personagem HP ON HP.COD_PERSONAGEM = P.COD_PERSONAGEM "
-                + "JOIN habilidade H ON H.COD_HABILIDADE = HP.COD_HABILIDADE "
-                + "where USUARIO_COD_USUARIO = " + jogador.getCodigoUsuario();
+                + "join usuario U on U.COD_PERSONAGEM = P.COD_PERSONAGEM "
+                + "JOIN habilidade H ON p.cod_personagem = h.PERSONAGEM_COD_PERSONAGEM "
+                + "where U.COD_USUARIO = " + jogador.getCodigoUsuario();
 
         ResultSet res = criarStatement(query);
         
@@ -216,6 +227,62 @@ public class JDBCConector
         return personagem;
     }
     
+    public Personagem buscarHabilidadesPersonagem(Usuario jogador) throws SQLException
+    {
+        ArrayList<Habilidade> habilidades = new ArrayList<Habilidade>();
+        Personagem personagem = new Personagem();
+        String query = "SELECT P.COD_PERSONAGEM, P.NOME_PERSONAGEM, P.TEMPO_VIDA, P. IND_ESCOLHIDO, H.COD_HABILIDADE,H.DESC_HABILIDADE "
+                + " from habilidade h "
+                + "join personagem p on p.COD_PERSONAGEM = h.PERSONAGEM_COD_PERSONAGEM  "
+                + "where p.COD_PERSONAGEM = " + jogador.getPersonagem().getIdPersonagem();
+
+        ResultSet res = criarStatement(query);
+        
+        while(res.next())
+        {
+            if(!res.isLast()){
+
+                habilidades.add(new Habilidade(
+                                res.getInt("COD_HABILIDADE"),
+                                res.getString("DESC_HABILIDADE"),
+                                false
+                ));
+            } else
+            {   
+                habilidades.add(new Habilidade(
+                                res.getInt("COD_HABILIDADE"),
+                                res.getString("DESC_HABILIDADE"),
+                                false
+                ));
+                personagem.setHabilidades(habilidades);                
+            }
+        }
+                
+        return personagem;
+    }
+    
+    public ArrayList<Personagem> buscarPersonagens() throws SQLException
+    {
+        ArrayList<Personagem> personagens = new ArrayList<Personagem>();
+        
+        String query = "select * "
+                     + "from personagem";
+        
+         ResultSet res = criarStatement(query);
+         
+         while (res.next())
+        {
+            personagens.add(new Personagem(
+                             res.getInt("COD_PERSONAGEM"),
+                             res.getString("NOME_PERSONAGEM"),
+                             res.getFloat("TEMPO_VIDA"),
+                             res.getBoolean("IND_ESCOLHIDO")
+                             
+            ));
+        }    
+         
+        return personagens;
+    }
     
     //</editor-fold>
     //<editor-fold defaultstate="collapsed" desc="Querys Perguntas e Alternativas">
