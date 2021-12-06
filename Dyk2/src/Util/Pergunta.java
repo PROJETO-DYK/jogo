@@ -47,9 +47,7 @@ public class Pergunta {
     {
         
         ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
-        ArrayList<Pergunta> novasPerguntas = new ArrayList<Pergunta>();
         ArrayList<Alternativa> alternativas = new ArrayList<Alternativa>();
-        ArrayList<Alternativa> generica = new ArrayList<Alternativa>();
         
         alternativas = conector.buscarAlternativas();
         
@@ -57,6 +55,7 @@ public class Pergunta {
         
         for (Pergunta pergunta : perguntas)
         {
+            ArrayList<Alternativa> generica = new ArrayList<Alternativa>();
             generica.clear();
             for(Alternativa alternativa : alternativas)
             {
@@ -66,9 +65,8 @@ public class Pergunta {
                 }
             }
             pergunta.setAlternativas(generica);
-            novasPerguntas.add(pergunta);
         }
-        return novasPerguntas;
+        return perguntas;
     }
     
   

@@ -1,14 +1,13 @@
 package dyk2;
 
 import Repository.JDBCConector;
+import Util.Alternativa;
 import Util.Menu;
 import Util.Pergunta;
-import Util.Personagem;
 import java.util.Scanner;
 import Util.Usuario;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Dyk2 
@@ -147,66 +146,103 @@ public class Dyk2
         
        int jogadorEscolhido = usuario.escolherUsuario(QUANTIDADE_JOGADORES);
        
-       int count = 0;
-   
+       
+       int rodada = 1;
        while(!perguntas.isEmpty())
        {
-           if (count == 0)
+           if (rodada == 1)
            {
                //System.out.println("Jogador " + jogadores.get(jogadorEscolhido).getNomeUsuario()+ " você irá iniciar o jogo! E logo apos sera o proximo jogador");
+           }
+           else 
+           {
+               //logica para buscar o outro jogador
+               jogadorEscolhido = trocarJogador(jogadorEscolhido);
            }
            
            int perguntaEscolhida = escolherPegunta(perguntas.size());
            
-           System.out.println("RODADA " + (count + 1));
-           System.out.println("Pergunta n° " + (count +1)+ " " + perguntas.get(perguntaEscolhida).getPergunta());
+           int respostaEscolhidaJogador = realizarPergunta(rodada,perguntaEscolhida,perguntas.get(perguntaEscolhida));
            
-           //System.out.println(perguntas.get(perguntaEscolhida).getAlternativas().get(0).getResposta());       //O SISTEMA ESTA IMPRIMINDO DESNECESSARIAMENTE UMA DAS ALTERNATIVAS ANTES DE MOSTRAR AS 4 ALTERNATIVAS
-           //selecionarPergunta()
-           //logica de pergunta
-           
-           int alternativa = 1;
-           for (var resposta : perguntas.get(perguntaEscolhida).getAlternativas()){                             //O JOGO ESTA SEMPRE IMPRIMINDO AS ULTIMAS 4 ALTERNATIVAS DO BANCO DE DADOS
-               System.out.println(alternativa + " - " +resposta.getResposta());
-               alternativa++;
-           }
-           
-           System.out.print("Digite a resposta correta: ");
-           int resposta = in.nextInt();
-           
-           if (perguntas.get(perguntaEscolhida).getAlternativas().get(resposta).isCorreta())
+           if (respostaEscolhidaJogador>0)
            {
-               System.out.println("\nExcelente! Resposta correta, não gerou perda de vida e ganhou +10 pontos!\n");
-               //pontosCalculados
-               //Metode de Vida
-               System.out.println("#####################################");
-               System.out.println("## Atualmente a sua pontuação e:   ##");/*PUXAR METODO PARA IMPRIMIR A PONTUAÇÃO)*/
-               System.out.println("## Atualmente a sua vida e:        ##");/*PUXAR METODO PARA IMPRIMIR A VIDA)*/
-               System.out.println("#####################################\n");
-               System.out.println("VAMOS PARA A RODADA " + (count + 2) + "\n");
-               System.out.println("ONDE O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
-               new Thread().sleep(10000);
-               clearConsole();
-               
-           }
-           else
+               if (perguntas.get(perguntaEscolhida).getAlternativas().get(respostaEscolhidaJogador).isCorreta())
+                {
+                    System.out.println("\nExcelente! Resposta correta, não gerou perda de vida e ganhou +10 pontos!\n");
+                    //pontosCalculados
+                    //Metode de Vida
+                    System.out.println("#####################################");
+                    System.out.println("## Atualmente a sua pontuação e:   ##");/*PUXAR METODO PARA IMPRIMIR A PONTUAÇÃO)*/
+                    System.out.println("## Atualmente a sua vida e:        ##");/*PUXAR METODO PARA IMPRIMIR A VIDA)*/
+                    System.out.println("#####################################\n");
+                    System.out.println("VAMOS PARA A RODADA " + (rodada + 1) + "\n");
+                    System.out.println("ONDE O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
+                    new Thread().sleep(10000);
+                    clearConsole();
+
+                }
+                else
+                {
+                    System.out.println("\nOps!! Parece que você errou a resposta, perca de 10HP e nenhuma pontuacao gerada!\n");
+                    //pontosCalculados
+                    //Metode de Vida
+                    System.out.println("#####################################");
+                    System.out.println("## Atualmente a sua pontuação e:   ##");/*PUXAR METODO PARA IMPRIMIR A PONTUAÇÃO)*/
+                    System.out.println("## Atualmente a sua vida e:        ##");/*PUXAR METODO PARA IMPRIMIR A VIDA)*/
+                    System.out.println("#####################################\n");
+                    System.out.println("VAMOS PARA A RODADA " + (rodada + 1) + "\n");
+                    System.out.println("ONDE O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
+                    new Thread().sleep(10000);
+                    clearConsole();
+                }
+           }else
            {
-               System.out.println("\nOps!! Parece que você errou a resposta, perca de 10HP e nenhuma pontuacao gerada!\n");
-               //pontosCalculados
-               //Metode de Vida
-               System.out.println("#####################################");
-               System.out.println("## Atualmente a sua pontuação e:   ##");/*PUXAR METODO PARA IMPRIMIR A PONTUAÇÃO)*/
-               System.out.println("## Atualmente a sua vida e:        ##");/*PUXAR METODO PARA IMPRIMIR A VIDA)*/
-               System.out.println("#####################################\n");
-               System.out.println("VAMOS PARA A RODADA " + (count + 2) + "\n");
-               System.out.println("ONDE O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
-               new Thread().sleep(10000);
-               clearConsole();
+               //logica para sair do jogo
+               //perguntar se o outro jogado deseja sair tbm 
+                  //caso sim encerra o jogo sem danos a nenhum jogador
+                  //caso nao o jogador que esta respondendo perde ponto
+               //
            }
-           count++;    
+           
        }
     }
     
+    public static int trocarJogador(int jogadorAtual)
+    {
+        if (jogadorAtual == 1)
+            jogadorAtual = 2;
+        else
+            jogadorAtual = 1;
+        
+        return jogadorAtual;
+    }
+    
+    public static int realizarPergunta(int rodada, int perguntaEscolhida, Pergunta pergunta)
+    {
+        int resposta=-1;
+        do
+        {   
+            System.out.println("RODADA " + (rodada));
+            System.out.println("Pergunta n° " + (rodada)+ " " + perguntas.get(perguntaEscolhida).getPergunta());
+
+            int a = 1;
+            for (Alternativa alternativa : pergunta.getAlternativas())
+            {                             //O JOGO ESTA SEMPRE IMPRIMINDO AS ULTIMAS 4 ALTERNATIVAS DO BANCO DE DADOS
+                System.out.println(a + " - " +alternativa.getResposta());
+                 a++;
+            }
+
+
+            System.out.print("Digite a sua resposta: ");
+            resposta = in.nextInt();
+            if(!(resposta >= 0 && resposta < pergunta.getAlternativas().size()))
+            {
+                System.out.println("Não existe a alternativa escolhida, favor escolha uma das alternativas abaixo ou 0 para sair.");
+            }
+        }
+        while(!(resposta >= 0 && resposta < pergunta.getAlternativas().size()));//a resposta tem que ser de 1 a 4 
+        return resposta; 
+    }    
     
     public static boolean validarSeJogadorCompleto(Usuario jogador, int numeroJogador)
     {
@@ -237,7 +273,4 @@ public class Dyk2
             System.out.println();    
     }
 
-    private static int pontosCalculados() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
