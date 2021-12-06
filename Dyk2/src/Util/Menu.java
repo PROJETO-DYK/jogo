@@ -69,4 +69,49 @@ public class Menu {
         System.out.println("EM VIRTUDE DE UM TRABALHO NA INSTITUIÇÃO UNA DO CAMPOS CRISTIANO MACHADO\n");
 
     }
+    
+     public void MenuEncerramentoJogo()
+     {
+        System.out.println("Deseja encerar a partida? (Lembrando que ambos os\n jogadore devem estar de acordo com a solicitação)");
+        System.out.println("Jogador Solicitante deseja realmente finalizar a partida?");
+        
+        System.out.println("VALE LEMBRAR QUE O JOGADOR SOLICITANTE TERA 15% DE VIDA TRANSFERIDOS PARA O OUTRO JOGADOR");
+        
+        System.out.println("[1] - SIM");
+        System.out.println("[2] - NÃO");
+        
+        System.out.println("Proximo Jogador deseja que a partida seja finaizada?");
+        System.out.println("[1] - SIM");
+        System.out.println("[2] - NÃO");
+        
+     }
+     
+     public void MenuRespostaCerta()
+     {
+        System.out.println("\nExcelente! Resposta correta, não gerou perda de vida\n");
+        System.out.println("#####################################");
+        System.out.println("## Atualmente a sua vida e:        ##");
+        System.out.println("#####################################\n");
+        System.out.println("O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
+        
+     }
+     
+     public void MenuRespostaErrada()
+     {
+        System.out.println("\nOps!! Parece que você errou a resposta, perca de 5% de vida\n");
+        System.out.println("#####################################");
+        System.out.println("## Atualmente a sua vida e:        ##");
+        System.out.println("#####################################\n");
+        System.out.println("O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
+        
+     }
+     
+     public void MenuConfirmarResposta()
+     {
+     
+        System.out.print("Tem certeza de que esta e a resposta certa?\n");
+        System.out.println("[1] - SIM");
+        System.out.println("[2] - NÃO");
+         
+     }
 }

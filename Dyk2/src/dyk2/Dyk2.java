@@ -51,7 +51,7 @@ public class Dyk2
                 {
                 
                     menu.MenuDesenvolvedores();
-                    new Thread().sleep(5000);
+                    esperar(5);
                     clearConsole();
                     menu.MenuInicializacao();
                 
@@ -168,32 +168,19 @@ public class Dyk2
            {
                if (perguntas.get(perguntaEscolhida).getAlternativas().get(respostaEscolhidaJogador).isCorreta())
                 {
-                    System.out.println("\nExcelente! Resposta correta, não gerou perda de vida e ganhou +10 pontos!\n");
-                    //pontosCalculados
-                    //Metode de Vida
-                    System.out.println("#####################################");
-                    System.out.println("## Atualmente a sua pontuação e:   ##");/*PUXAR METODO PARA IMPRIMIR A PONTUAÇÃO)*/
-                    System.out.println("## Atualmente a sua vida e:        ##");/*PUXAR METODO PARA IMPRIMIR A VIDA)*/
-                    System.out.println("#####################################\n");
+                    menu.MenuRespostaCerta();
                     System.out.println("VAMOS PARA A RODADA " + (rodada + 1) + "\n");
-                    System.out.println("ONDE O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
-                    new Thread().sleep(10000);
+                    esperar(10);
                     clearConsole();
-
+                   
                 }
                 else
                 {
-                    System.out.println("\nOps!! Parece que você errou a resposta, perca de 10HP e nenhuma pontuacao gerada!\n");
-                    //pontosCalculados
-                    //Metode de Vida
-                    System.out.println("#####################################");
-                    System.out.println("## Atualmente a sua pontuação e:   ##");/*PUXAR METODO PARA IMPRIMIR A PONTUAÇÃO)*/
-                    System.out.println("## Atualmente a sua vida e:        ##");/*PUXAR METODO PARA IMPRIMIR A VIDA)*/
-                    System.out.println("#####################################\n");
+                    menu.MenuRespostaErrada();
                     System.out.println("VAMOS PARA A RODADA " + (rodada + 1) + "\n");
-                    System.out.println("ONDE O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
-                    new Thread().sleep(10000);
+                    esperar(10);
                     clearConsole();
+                  
                 }
            }else
            {
@@ -272,5 +259,11 @@ public class Dyk2
         for (int i = 0; i < 100; ++i)
             System.out.println();    
     }
-
+    
+    public static void esperar(int tempoEspera) throws InterruptedException
+    {     
+        
+        Thread.sleep(tempoEspera * 1000);
+                
+    }
 }
