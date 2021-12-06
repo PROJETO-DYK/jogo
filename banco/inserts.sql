@@ -1,8 +1,8 @@
 INSERT INTO USUARIO
-(NOME_USUARIO, SOBRENOME_USUARIO, EMAIL, APELIDO_USUARIO, SENHA) VALUES
-('Thiago','Santos','ts@gmail.com','Thiago','123'),
-('Gladson','Ameno','ga@gmail.com','Gladstone','456'),
-('Amanda','Campos','ac@gmail.com','Mandinha','789');
+(NOME_USUARIO, SOBRENOME_USUARIO, EMAIL, APELIDO_USUARIO, SENHA, PERSONAGEM_COD_PERSONAGEM) VALUES
+('Thiago','Santos','ts@gmail.com','Thiago','123',1),
+('Gladson','Ameno','ga@gmail.com','Gladstone','456',2),
+('Amanda','Campos','ac@gmail.com','Mandinha','789',3);
 
 INSERT INTO tipo_pergunta
 (DESC_TIPO_PERGUNTA) VALUES
@@ -128,4 +128,4 @@ INSERT INTO habilidade(desc_habilidade,PERSONAGEM_COD_PERSONAGEM) VALUES
 ('Perder 10 de vida e ganhar 10 pontos',3),
 ('Perder 20 pontos e ganhar 20 de vida',4),
 ('Modo Deus',5);
-
+SELECT * from personagem

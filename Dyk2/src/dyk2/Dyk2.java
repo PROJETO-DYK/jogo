@@ -143,56 +143,68 @@ public class Dyk2
 //            
 //        }
         
-        perguntas = Pergunta.buscarPerguntas(conector);
+       perguntas = Pergunta.buscarPerguntas(conector);
         
        int jogadorEscolhido = usuario.escolherUsuario(QUANTIDADE_JOGADORES);
        
        int count = 0;
+   
        while(!perguntas.isEmpty())
        {
            if (count == 0)
            {
-               //System.out.println(jogadores.get(jogadorEscolhido).getNumeroJogador() + " você irá iniciar o jogo!");
+               //System.out.println("Jogador " + jogadores.get(jogadorEscolhido).getNomeUsuario()+ " você irá iniciar o jogo! E logo apos sera o proximo jogador");
            }
+           
            int perguntaEscolhida = escolherPegunta(perguntas.size());
            
+           System.out.println("RODADA " + (count + 1));
            System.out.println("Pergunta n° " + (count +1)+ " " + perguntas.get(perguntaEscolhida).getPergunta());
            
-           System.out.println(perguntas.get(perguntaEscolhida).getAlternativas().get(0).getResposta());
+           //System.out.println(perguntas.get(perguntaEscolhida).getAlternativas().get(0).getResposta());       //O SISTEMA ESTA IMPRIMINDO DESNECESSARIAMENTE UMA DAS ALTERNATIVAS ANTES DE MOSTRAR AS 4 ALTERNATIVAS
            //selecionarPergunta()
            //logica de pergunta
+           
            int alternativa = 1;
-           for (var resposta : perguntas.get(perguntaEscolhida).getAlternativas()){
+           for (var resposta : perguntas.get(perguntaEscolhida).getAlternativas()){                             //O JOGO ESTA SEMPRE IMPRIMINDO AS ULTIMAS 4 ALTERNATIVAS DO BANCO DE DADOS
                System.out.println(alternativa + " - " +resposta.getResposta());
                alternativa++;
            }
-           System.out.print("Digite a resposta: ");
+           
+           System.out.print("Digite a resposta correta: ");
            int resposta = in.nextInt();
            
            if (perguntas.get(perguntaEscolhida).getAlternativas().get(resposta).isCorreta())
            {
-               System.out.println("Correta");
+               System.out.println("\nExcelente! Resposta correta, não gerou perda de vida e ganhou +10 pontos!\n");
+               //pontosCalculados
+               //Metode de Vida
+               System.out.println("#####################################");
+               System.out.println("## Atualmente a sua pontuação e:   ##");/*PUXAR METODO PARA IMPRIMIR A PONTUAÇÃO)*/
+               System.out.println("## Atualmente a sua vida e:        ##");/*PUXAR METODO PARA IMPRIMIR A VIDA)*/
+               System.out.println("#####################################\n");
+               System.out.println("VAMOS PARA A RODADA " + (count + 2) + "\n");
+               System.out.println("ONDE O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
+               new Thread().sleep(10000);
+               clearConsole();
+               
            }
            else
            {
-               System.out.println("Errada");
+               System.out.println("\nOps!! Parece que você errou a resposta, perca de 10HP e nenhuma pontuacao gerada!\n");
+               //pontosCalculados
+               //Metode de Vida
+               System.out.println("#####################################");
+               System.out.println("## Atualmente a sua pontuação e:   ##");/*PUXAR METODO PARA IMPRIMIR A PONTUAÇÃO)*/
+               System.out.println("## Atualmente a sua vida e:        ##");/*PUXAR METODO PARA IMPRIMIR A VIDA)*/
+               System.out.println("#####################################\n");
+               System.out.println("VAMOS PARA A RODADA " + (count + 2) + "\n");
+               System.out.println("ONDE O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
+               new Thread().sleep(10000);
+               clearConsole();
            }
            count++;    
        }
-       
-       //INICIO PERGUNTAS//
-      //CARREGAR PERGUNTAS E RESPOSTAS DO BANCO DE DADOS EM LOOPING PARA OS JOGADORES RESPONDEREM//
-         //JOGO FAZ PERGUNTA
-         //JOGO MOSTRA ALTERNATIVAS
-         //JOGADOR SORTEADO RESPONDE                
-         //MOSTRA PONTUAÇÃO E VIDA 
-         //JOGO FAZ PERGUNTA
-         //JOGO MOSTRA ALTERNATIVAS           
-         //PROXIMO JOGADOR RESPONDE    ->    // SE JOGADOR SORTEADO FOR IGUAL A 1, PROXIMO JOGADOR E IGUAL A JOGADOR SORTEADO MAIS 1; 
-                                            //SE JOGADOR SORTEADO FOR IGUAL A 2, PROXIMO JOGADOR SORTEADO MENOS 1 
-         //MOSTRA PONTUAÇÃO E VIDA
-      //FIM PERGUNTAS//
-      
     }
     
     
@@ -218,10 +230,14 @@ public class Dyk2
        return perguntaEscolhida;
        
     }
+   
     public static void clearConsole() throws InterruptedException
     {
         for (int i = 0; i < 100; ++i)
             System.out.println();    
     }
-      
+
+    private static int pontosCalculados() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
