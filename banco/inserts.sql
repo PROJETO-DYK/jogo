@@ -21,7 +21,7 @@ INSERT INTO pergunta
 ('Referente a afirmativa a seguir selecione a alternativa que se encaixa em um significado de metodo JAVA:  "O metodo  é visível pela própria classe, por suas subclasses e pelas classes do mesmo pacote"',2),
 ('Referente a afirmativa a seguir selecione a alternativa que se encaixa em um significado de metodo JAVA:  "O metodo é visível por qualquer classe, sendo o qualificador mais aberto no sentido de que qualquer classe pode usar esse método"',2),
 ('Qual dos metodos a seguir e utilizado em java para "Imprimir" uma mensagem na tela?',2),
-('Qual comando e usaco quando queremos importar uma biblioteca para dentro do documento java na hora da programação?',2);
+('Qual comando e usado quando queremos importar uma biblioteca para dentro do documento java na hora da programação?',2);
 
 INSERT INTO resposta
 (RESPOSTA) VALUES
@@ -63,7 +63,7 @@ INSERT INTO resposta
 ('Imprimir("Aluma coisa")'),
 ('Importar biblioteca'),
 ('impoting'),
-('impot'),
+('import'),
 ('import library');
 
 INSERT INTO pergunta_resposta
