@@ -6,6 +6,9 @@ import Util.Menu;
 import Util.Pergunta;
 import java.util.Scanner;
 import Util.Usuario;
+import java.awt.AWTException;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -162,9 +165,9 @@ public class Dyk2
            
            int perguntaEscolhida = escolherPegunta(perguntas.size());
            
-           int respostaEscolhidaJogador = realizarPergunta(rodada,perguntaEscolhida,perguntas.get(perguntaEscolhida));
+           int respostaEscolhidaJogador = realizarPergunta(rodada,perguntaEscolhida,perguntas.get(perguntaEscolhida))-1;
            
-           if (respostaEscolhidaJogador>0)
+           if (respostaEscolhidaJogador>-1)
            {
                if (perguntas.get(perguntaEscolhida).getAlternativas().get(respostaEscolhidaJogador).isCorreta())
                 {
@@ -190,8 +193,10 @@ public class Dyk2
                   //caso nao o jogador que esta respondendo perde ponto
                //
            }
-           
+           rodada++;
+           perguntas.remove(perguntaEscolhida);
        }
+        System.out.println("Fim das perguntas");
     }
     
     public static int trocarJogador(int jogadorAtual)
@@ -209,6 +214,11 @@ public class Dyk2
         int resposta=-1;
         do
         {   
+            if(!(resposta > 0 && resposta <= pergunta.getAlternativas().size()))
+            {
+                System.out.println("Não existe a alternativa escolhida, favor escolha uma das alternativas abaixo ou 0 para sair.\n\n");
+            }
+            
             System.out.println("RODADA " + (rodada));
             System.out.println("Pergunta n° " + (rodada)+ " " + perguntas.get(perguntaEscolhida).getPergunta());
 
@@ -219,15 +229,11 @@ public class Dyk2
                  a++;
             }
 
-
-            System.out.print("Digite a sua resposta: ");
+            System.out.print("Digite a sua resposta ou 0 para sair: ");
             resposta = in.nextInt();
-            if(!(resposta >= 0 && resposta < pergunta.getAlternativas().size()))
-            {
-                System.out.println("Não existe a alternativa escolhida, favor escolha uma das alternativas abaixo ou 0 para sair.");
-            }
+            
         }
-        while(!(resposta >= 0 && resposta < pergunta.getAlternativas().size()));//a resposta tem que ser de 1 a 4 
+        while(!(resposta >= 0 && resposta <= pergunta.getAlternativas().size()));//a resposta tem que ser de 1 a 4 
         return resposta; 
     }    
     
@@ -253,17 +259,22 @@ public class Dyk2
        return perguntaEscolhida;
        
     }
-   
-    public static void clearConsole() throws InterruptedException
-    {
-        for (int i = 0; i < 100; ++i)
-            System.out.println();    
-    }
-    
+       
     public static void esperar(int tempoEspera) throws InterruptedException
     {     
         
         Thread.sleep(tempoEspera * 1000);
                 
+    }
+    public final static void clearConsole() {
+        try {
+            Robot robot = new Robot();
+            robot.setAutoDelay(10);
+            robot.keyPress(KeyEvent.VK_CONTROL);
+            robot.keyPress(KeyEvent.VK_L);
+            robot.keyRelease(KeyEvent.VK_CONTROL);
+            robot.keyRelease(KeyEvent.VK_L);
+        } catch (AWTException ex) {
+        }
     }
 }
