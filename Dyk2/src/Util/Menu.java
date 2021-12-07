@@ -70,22 +70,7 @@ public class Menu {
 
     }
     
-     public void MenuEncerramentoJogo()
-     {
-        System.out.println("Deseja encerar a partida? (Lembrando que ambos os\n jogadore devem estar de acordo com a solicitação)");
-        System.out.println("Jogador Solicitante deseja realmente finalizar a partida?");
-        
-        System.out.println("VALE LEMBRAR QUE O JOGADOR SOLICITANTE TERA 15% DE VIDA TRANSFERIDOS PARA O OUTRO JOGADOR");
-        
-        System.out.println("[1] - SIM");
-        System.out.println("[2] - NÃO");
-        
-        System.out.println("Proximo Jogador deseja que a partida seja finaizada?");
-        System.out.println("[1] - SIM");
-        System.out.println("[2] - NÃO");
-        
-     }
-     
+
      public void MenuRespostaCerta()
      {
         System.out.println("\nExcelente! Resposta correta, não gerou perda de vida\n");

@@ -1,5 +1,13 @@
+INSERT INTO personagem (nome_PERSONAGEM)
+VALUES
+('Naruto'),
+('Boruto'),
+('Sonic'),
+('Deku'),
+('Saitama');
+
 INSERT INTO USUARIO
-(NOME_USUARIO, SOBRENOME_USUARIO, EMAIL, APELIDO_USUARIO, SENHA, PERSONAGEM_COD_PERSONAGEM) VALUES
+(NOME_USUARIO, SOBRENOME_USUARIO, EMAIL, APELIDO_USUARIO, SENHA, COD_PERSONAGEM) VALUES
 ('Thiago','Santos','ts@gmail.com','Thiago','123',1),
 ('Gladson','Ameno','ga@gmail.com','Gladstone','456',2),
 ('Amanda','Campos','ac@gmail.com','Mandinha','789',3);
@@ -109,15 +117,9 @@ INSERT INTO pergunta_resposta
 (10,39,true),
 (10,40,false);
 
-INSERT INTO personagem (nome_PERSONAGEM)
-VALUES
-('Naruto'),
-('Boruto'),
-('Sonic'),
-('Deku'),
-('Saitama');
 
-INSERT INTO habilidade(desc_habilidade,PERSONAGEM_COD_PERSONAGEM) VALUES
+
+INSERT INTO habilidade(desc_habilidade,COD_PERSONAGEM) VALUES
 ('Sair do jogo sem perder vida',1),
 ('Retirar 10pts do Adversario',2),
 ('Duplicar o valor de pts da pergunta',3),
@@ -128,4 +130,4 @@ INSERT INTO habilidade(desc_habilidade,PERSONAGEM_COD_PERSONAGEM) VALUES
 ('Perder 10 de vida e ganhar 10 pontos',3),
 ('Perder 20 pontos e ganhar 20 de vida',4),
 ('Modo Deus',5);
-SELECT * from personagem
+

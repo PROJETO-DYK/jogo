@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Usuario {
+public class Usuario
+{
+
     private int CodigoUsuario;
     private String NomeUsuario;
     private String SobrenomeUsuario;
@@ -16,11 +18,13 @@ public class Usuario {
     private boolean UsuarioAtivo;
     private int NumeroJogador;
     private int CodigoPersonagem;
+    private int Score;
     private Personagem personagem;
-    
+
     static Scanner in = new Scanner(System.in);
-    
-    public Usuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo) {
+
+    public Usuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo)
+    {
         this.CodigoUsuario = CodigoUsuario;
         this.NomeUsuario = NomeUsuario;
         this.SobrenomeUsuario = SobrenomeUsuario;
@@ -29,64 +33,81 @@ public class Usuario {
         this.Senha = Senha;
         this.UsuarioAtivo = UsuarioAtivo;
     }
-    public Usuario(){}
 
-    public int getCodigoUsuario() {
+    public Usuario()
+    {
+    }
+
+    public int getCodigoUsuario()
+    {
         return CodigoUsuario;
     }
 
-    public void setCodigoUsuario(int CodigoUsuario) {
+    public void setCodigoUsuario(int CodigoUsuario)
+    {
         this.CodigoUsuario = CodigoUsuario;
     }
 
-    public String getNomeUsuario() {
+    public String getNomeUsuario()
+    {
         return NomeUsuario;
     }
 
-    public void setNomeUsuario(String NomeUsuario) {
+    public void setNomeUsuario(String NomeUsuario)
+    {
         this.NomeUsuario = NomeUsuario;
     }
 
-    public String getSobrenomeUsuario() {
+    public String getSobrenomeUsuario()
+    {
         return SobrenomeUsuario;
     }
 
-    public void setSobrenomeUsuario(String SobrenomeUsuario) {
+    public void setSobrenomeUsuario(String SobrenomeUsuario)
+    {
         this.SobrenomeUsuario = SobrenomeUsuario;
     }
 
-    public String getEmail() {
+    public String getEmail()
+    {
         return Email;
     }
 
-    public void setEmail(String Email) {
+    public void setEmail(String Email)
+    {
         this.Email = Email;
     }
 
-    public String getApelido() {
+    public String getApelido()
+    {
         return Apelido;
     }
 
-    public void setApelido(String Apelido) {
+    public void setApelido(String Apelido)
+    {
         this.Apelido = Apelido;
     }
 
-    public String getSenha() {
+    public String getSenha()
+    {
         return Senha;
     }
 
-    public void setSenha(String Senha) {
+    public void setSenha(String Senha)
+    {
         this.Senha = Senha;
     }
 
-    public boolean isUsuarioAtivo() {
+    public boolean isUsuarioAtivo()
+    {
         return UsuarioAtivo;
     }
 
-    public void setUsuarioAtivo(boolean UsuarioAtivo) {
+    public void setUsuarioAtivo(boolean UsuarioAtivo)
+    {
         this.UsuarioAtivo = UsuarioAtivo;
     }
-    
+
     public int getNumeroJogador()
     {
         return NumeroJogador;
@@ -106,7 +127,7 @@ public class Usuario {
     {
         this.personagem = personagem;
     }
-    
+
     public Personagem getCodigoPersonagem()
     {
         return personagem;
@@ -116,78 +137,91 @@ public class Usuario {
     {
         this.personagem = personagem;
     }
-    
-    public Usuario preencherUsuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo,int CodigoPersonagem) {
+
+    public int getScore()
+    {
+        return Score;
+    }
+
+    public void setScore(int Score)
+    {
+        this.Score = Score;
+    }
+
+    public Usuario preencherUsuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo, int CodigoPersonagem, int Score)
+    {
         Personagem p = new Personagem();
-        this.CodigoUsuario = CodigoUsuario;        
+        this.CodigoUsuario = CodigoUsuario;
         this.NomeUsuario = NomeUsuario;
         this.SobrenomeUsuario = SobrenomeUsuario;
         this.Email = Email;
         this.Apelido = Apelido;
         this.Senha = Senha;
         this.UsuarioAtivo = UsuarioAtivo;
-        this.CodigoPersonagem = CodigoPersonagem; 
-        
+        this.CodigoPersonagem = CodigoPersonagem;
+        this.Score = Score;
+
         return this;
     }
-    
-    public int escolherUsuario(int quantidadeDeJogadores)
+
+    public static int escolherUsuario(int quantidadeDeJogadores)
     {
-       Random rand = new Random(); 
-       int usuarioEscolhido = rand.nextInt(quantidadeDeJogadores)+1;
-       System.out.println("O jogador Nº: " + usuarioEscolhido + " vai começar respondendo as perguntas!!");
-       return usuarioEscolhido;
-       
+        Random rand = new Random();
+        int usuarioEscolhido = rand.nextInt(quantidadeDeJogadores);
+        return usuarioEscolhido;
+
     }
-    
-    public static Usuario criarUsuario(String[] args,Personagem personagemEscolhido,JDBCConector conector) throws SQLException, InterruptedException
+
+    public static Usuario criarUsuario(String[] args, Personagem personagemEscolhido, JDBCConector conector) throws SQLException, InterruptedException
     {
-        Usuario usuario;
-        
+        Usuario usuario = new Usuario();
+
         System.out.println("Bem vindo a tela de cadastro de Usuario!\n");
-        
+
         System.out.print("Para começar, digite seu e-mail: ");
-        
+
         String email = in.next();
-        
-        usuario = conector.buscarUsuario(email,"",2);
-        
-        if(usuario.getCodigoUsuario()<0)
+
+        usuario = conector.buscarUsuario(email, "", 2);
+
+        if (usuario.getCodigoUsuario() < 0)
+        {
             main(args); //volta ao menu inicial por opção do usuario
-        else if (usuario.getCodigoUsuario()>0)
+        } else if (usuario.getCodigoUsuario() > 0)
         {
-            return buscarJogador(usuario,conector);
-        }
-        else
+            return buscarJogador(usuario, conector);
+        } else
         {
-            String senha, nome, sobrenome,apelido;
-            
+            String senha, nome, sobrenome, apelido;
+
             System.out.println("Digite a senha: ");
             senha = in.next();
             usuario.setSenha(senha);
-            
+
             System.out.println("Digite seu nome:");
             nome = in.next();
             usuario.setNomeUsuario(nome);
-            
+
             System.out.println("Digite seu sobrenome:");
             sobrenome = in.next();
             usuario.setSobrenomeUsuario(sobrenome);
-            
+
             System.out.println("Digite seu apelido:");
             apelido = in.next();
             usuario.setApelido(apelido);
-            
+
             usuario.setPersonagem(personagemEscolhido);
-            
-            conector.buscarHabilidadesPersonagem(usuario);
-            
+
+            personagemEscolhido = conector.buscarHabilidadesPersonagem(usuario);
+
+            usuario.setPersonagem(personagemEscolhido);
+
             conector.inserirUsuario(usuario);
         }
         return usuario;
     }
-    
-        public static Usuario buscarJogador(Usuario jogador,JDBCConector conector) throws SQLException
+
+    public static Usuario buscarJogador(Usuario jogador, JDBCConector conector) throws SQLException
     {
         if (jogador.getNomeUsuario() == null)
         {
@@ -199,14 +233,14 @@ public class Usuario {
             String senha = in.next();
             jogador.setSenha(senha);
 
-            jogador = conector.buscarUsuario(email,senha,1);
-        
+            jogador = conector.buscarUsuario(email, senha, 1);
+
         }
         Personagem penrsonagem = conector.buscarAvatarDoUsuario(jogador);
-        
+
         jogador.setPersonagem(penrsonagem);
-        
+
         return jogador;
     }
-    
+
 }

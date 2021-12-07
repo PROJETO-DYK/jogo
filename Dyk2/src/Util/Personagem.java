@@ -6,13 +6,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class Personagem {
+public class Personagem
+{
+
     private int IdPersonagem;
     private String NomePersonagem;
     private List<Habilidade> Habilidades;
     private Float TempoVida;
     private boolean IndicadorEscolhido;
-    
+
     Scanner in = new Scanner(System.in);
 
     public Personagem(int IdPersonagem, String NomePersonagem, List<Habilidade> Habilidades, Float TempoVida, boolean IndicadorEscolhido)
@@ -23,6 +25,7 @@ public class Personagem {
         this.TempoVida = TempoVida;
         this.IndicadorEscolhido = IndicadorEscolhido;
     }
+
     public Personagem(int IdPersonagem, String NomePersonagem, Float TempoVida, boolean IndicadorEscolhido)
     {
         this.IdPersonagem = IdPersonagem;
@@ -30,63 +33,76 @@ public class Personagem {
         this.TempoVida = TempoVida;
         this.IndicadorEscolhido = IndicadorEscolhido;
     }
-    public Personagem(){ }
 
-    public int getIdPersonagem() {
+    public Personagem()
+    {
+    }
+
+    public int getIdPersonagem()
+    {
         return IdPersonagem;
     }
 
-    public void setIdPersonagem(int IdPersonagem) {
+    public void setIdPersonagem(int IdPersonagem)
+    {
         this.IdPersonagem = IdPersonagem;
     }
 
-    public String getNomePersonagem() {
+    public String getNomePersonagem()
+    {
         return NomePersonagem;
     }
 
-    public void setNomePersonagem(String NomePersonagem) {
+    public void setNomePersonagem(String NomePersonagem)
+    {
         this.NomePersonagem = NomePersonagem;
     }
 
-    public List<Habilidade> getHabilidades() {
+    public List<Habilidade> getHabilidades()
+    {
         return Habilidades;
     }
 
-    public void setHabilidades(List<Habilidade> Habilidades) {
+    public void setHabilidades(List<Habilidade> Habilidades)
+    {
         this.Habilidades = Habilidades;
     }
 
-    public Float getTempoVida() {
+    public Float getTempoVida()
+    {
         return TempoVida;
     }
 
-    public void setTempoVida(Float TempoVida) {
+    public void setTempoVida(Float TempoVida)
+    {
         this.TempoVida = TempoVida;
     }
 
-    public boolean isIndicadorEscolhido() {
+    public boolean isIndicadorEscolhido()
+    {
         return IndicadorEscolhido;
     }
 
-    public void setIndicadorEscolhido(boolean IndicadorEscolhido) {
+    public void setIndicadorEscolhido(boolean IndicadorEscolhido)
+    {
         this.IndicadorEscolhido = IndicadorEscolhido;
     }
-    
+
     public Personagem escolherPersonagem(JDBCConector conector) throws SQLException
     {
         ArrayList<Personagem> personagens = new ArrayList<Personagem>();
-        
+
         personagens = conector.buscarPersonagens();
-        
+
         System.out.println("Escolha o pesonagem:");
         for (Personagem personagem : personagens)
         {
-            System.out.println(personagem.getIdPersonagem()+ " - " + personagem.getNomePersonagem());
+            System.out.println(personagem.getIdPersonagem() + " - " + personagem.getNomePersonagem());
         }
-        
+
         int personagemEscolhido = in.nextInt();
-        
-        return personagens.get(personagemEscolhido-1);
+
+        return personagens.get(personagemEscolhido - 1);
     }
-    
+
 }

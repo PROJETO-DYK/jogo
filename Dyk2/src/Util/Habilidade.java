@@ -1,8 +1,8 @@
-
 package Util;
 
 public class Habilidade
 {
+
     private int CodigoHabilidade;
     private String Habilidade;
     private boolean habilidadeUtilizada;
@@ -33,6 +33,5 @@ public class Habilidade
     {
         this.Habilidade = Habilidade;
     }
-    
-    
+
 }
