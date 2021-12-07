@@ -133,7 +133,7 @@ public class Dyk2
                         clearConsole();
                         System.out.println("Usuario Logado com sucesso");
                         esperar(3);
-                        clearConsole();
+                        clearConsole();//TODO: cORRIGIR LOGICA DA CRIAÇÃO DO PERSONAGEM
                     }
                     case 3 ->
                     {
