@@ -173,36 +173,7 @@ public class Dyk2
             } while (!opcaoValida);
 
         }
-//        jogadores.add(new Usuario(1, 
-//                                "Thiago", 
-//                                "ameno", 
-//                "ameno", 
-//                "ameno", 
-//                "ameno", 
-//                true, 
-//                1, 
-//                5, 
-//                0, 
-//                new Personagem (5, 
-//                "Zezinho",
-//                        new ArrayList<Habilidade>(),(float)100, 
-//                        true)));
-//        
-//        jogadores.add(new Usuario(2, 
-//                                "Gladson", 
-//                                "ameno", 
-//                "ameno", 
-//                "ameno", 
-//                "ameno", 
-//                true, 
-//                2, 
-//                5, 
-//                0, 
-//                new Personagem (5, 
-//                "Zezinho",
-//                        new ArrayList<Habilidade>(),(float)100, 
-//                        true)));
-//
+
 
         clearConsole();
         //jogo.jogar(jogadores, conector);
