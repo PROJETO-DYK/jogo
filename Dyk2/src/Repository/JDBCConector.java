@@ -108,7 +108,7 @@ public class JDBCConector
         String query = "select * "
                 + "from usuario u "
                 + "join ranking r on u.COD_USUARIO = r.COD_USUARIO "
-                + "where u.email = ?"; //quary sem parametro select *from alternativas 
+                + "where u.email = ?";
 
         PreparedStatement stmt = conexao.prepareStatement(query);
 
@@ -118,21 +118,47 @@ public class JDBCConector
 
         if (res.next())
         {
-            usuario = usuario.preencherUsuario(res.getInt("COD_USUARIO"),
+            new Usuario (res.getInt("COD_USUARIO"),
                     res.getString("NOME_USUARIO"),
                     res.getString("SOBRENOME_USUARIO"),
                     res.getString("EMAIL"),
                     res.getString("APELIDO_USUARIO"),
                     res.getString("SENHA"),
                     res.getBoolean("IND_ATIVO"),
-                    res.getInt("COD_PERSONAGEM"),
-                    new Ranking(res.getInt("PONTUACAO")));
+                    0,
+                    new Ranking(res.getInt("PONTUACAO")),
+                    new Personagem (res.getInt("COD_PERSONAGEM"))
+                    );
 
             validarSeSenhaEstaCorreta(senha, res, controleProcessamento, usuario);
-        } else
+        }else
         {
             usuario.setEmail(email);
         }
+        return usuario;
+    }
+    
+     public Usuario buscarRanking(Usuario usuario) throws SQLException
+    {
+        String query = "select u.COD_USUARIO,r.PONTUACAO "
+                + "from usuario u "
+                + "join ranking r on u.COD_USUARIO = r.COD_USUARIO "
+                + "where u.email = ?";
+        
+        PreparedStatement stmt = conexao.prepareStatement(query);
+
+        stmt.setString(1, usuario.getEmail());
+
+        ResultSet res = stmt.executeQuery();
+        
+        res.next();
+        
+        usuario.setCodigoUsuario(res.getInt(1));
+        
+        Ranking score = new Ranking (res.getInt(2));
+        
+        usuario.setScore(score);
+        
         return usuario;
     }
 
@@ -162,7 +188,7 @@ public class JDBCConector
         }
     }
 
-    public int inserirUsuario(Usuario usuario)
+    public void inserirUsuario(Usuario usuario)
     {
         String query = "INSERT INTO usuario "
                 + "(NOME_USUARIO, SOBRENOME_USUARIO, EMAIL,APELIDO_USUARIO, SENHA, COD_PERSONAGEM)"
@@ -179,15 +205,12 @@ public class JDBCConector
             stmt.setString(5, usuario.getSenha());
             stmt.setInt(6, usuario.getPersonagem().getIdPersonagem());
 
-            return stmt.executeUpdate();
+            stmt.executeUpdate();
 
         } catch (SQLException ex)
         {
             System.out.println("[ERRO] AO EXECUTAR QUERY " + ex);
         }
-
-        return 0;
-
     }
 
     public int salvarScore(int score, int codigoUsuario)
@@ -277,14 +300,13 @@ public class JDBCConector
         return personagem;
     }
 
-    public Personagem buscarHabilidadesPersonagem(Usuario jogador) throws SQLException
+    public Personagem buscarHabilidadesPersonagem(Personagem personagem) throws SQLException
     {
         ArrayList<Habilidade> habilidades = new ArrayList<Habilidade>();
-        Personagem personagem = new Personagem();
         String query = "SELECT P.COD_PERSONAGEM, P.NOME_PERSONAGEM, P.TEMPO_VIDA, P. IND_ESCOLHIDO, H.COD_HABILIDADE,H.DESC_HABILIDADE "
                 + " from habilidade h "
                 + "join personagem p on p.COD_PERSONAGEM = h.COD_PERSONAGEM  "
-                + "where p.COD_PERSONAGEM = " + jogador.getPersonagem().getIdPersonagem();
+                + "where p.COD_PERSONAGEM = " + personagem.getIdPersonagem();
 
         ResultSet res = criarStatement(query);
 

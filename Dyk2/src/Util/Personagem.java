@@ -33,6 +33,11 @@ public class Personagem
         this.TempoVida = TempoVida;
         this.IndicadorEscolhido = IndicadorEscolhido;
     }
+    
+    public Personagem(int IdPersonagem)
+    {
+        this.IdPersonagem = IdPersonagem;
+    }
 
     public Personagem()
     {
@@ -93,16 +98,34 @@ public class Personagem
         ArrayList<Personagem> personagens = new ArrayList<Personagem>();
 
         personagens = conector.buscarPersonagens();
+        
+        boolean opcaoValida = false;
+        do{
+            if (!opcaoValida)
+                System.out.println("Personagem inexistente!\n");
+                
+            System.out.println("Escolha o seu pesonagem:");
+            for (Personagem personagem : personagens)
+            {
+                System.out.println("[" + personagem.getIdPersonagem() + "]" + " - " + personagem.getNomePersonagem());
+            }
 
-        System.out.println("Escolha o pesonagem:");
-        for (Personagem personagem : personagens)
-        {
-            System.out.println(personagem.getIdPersonagem() + " - " + personagem.getNomePersonagem());
-        }
-
-        int personagemEscolhido = in.nextInt();
-
-        return personagens.get(personagemEscolhido - 1);
+            int personagemEscolhido = in.nextInt()-1;
+            
+            if (personagemEscolhido >= 0 && personagemEscolhido<= personagens.size()-1)
+            {
+                Personagem personagem = personagens.get(personagemEscolhido);
+        
+                personagem = conector.buscarHabilidadesPersonagem(personagem);
+                
+                opcaoValida = true;
+                
+                return personagem;
+            }
+            
+        }while (!opcaoValida);
+        
+        return null;
     }
 
 }

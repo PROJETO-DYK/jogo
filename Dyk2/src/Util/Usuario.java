@@ -18,7 +18,6 @@ public class Usuario
     private String Senha;
     private boolean UsuarioAtivo;
     private int NumeroJogador;
-    private int CodigoPersonagem;
     private Ranking Score;
     private Personagem Personagem;
 
@@ -35,23 +34,20 @@ public class Usuario
         this.UsuarioAtivo = UsuarioAtivo;
     }
 
-    public Usuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo, int NumeroJogador, int CodigoPersonagem, Ranking Score, Personagem Personagem)
+    public Usuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo, int NumeroJogador, Ranking Score, Personagem Personagem)
     {
         this.CodigoUsuario = CodigoUsuario;
         this.NomeUsuario = NomeUsuario;
         this.SobrenomeUsuario = SobrenomeUsuario;
         this.Email = Email;
-        this.Apelido = Apelido;
         this.Senha = Senha;
+        this.Apelido = Apelido;
         this.UsuarioAtivo = UsuarioAtivo;
         this.NumeroJogador = NumeroJogador;
-        this.CodigoPersonagem = CodigoPersonagem;
         this.Score = Score;
         this.Personagem = Personagem;
     }
     
-    
-
     public Usuario()
     {
     }
@@ -146,16 +142,6 @@ public class Usuario
         this.Personagem = Personagem;
     }
 
-    public Personagem getCodigoPersonagem()
-    {
-        return Personagem;
-    }
-
-    public void setCodigoPersonagem(Personagem Personagem)
-    {
-        this.Personagem = Personagem;
-    }
-
     public Ranking getScore() {
         return Score;
     }
@@ -165,9 +151,9 @@ public class Usuario
     }
 
 
-    public Usuario preencherUsuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo, int CodigoPersonagem, Ranking Score)
+    public Usuario preencherUsuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo, Personagem CodigoPersonagem, Ranking Score)
     {
-        Personagem p = new Personagem();
+        Personagem  = new Personagem();
         this.CodigoUsuario = CodigoUsuario;
         this.NomeUsuario = NomeUsuario;
         this.SobrenomeUsuario = SobrenomeUsuario;
@@ -175,7 +161,7 @@ public class Usuario
         this.Apelido = Apelido;
         this.Senha = Senha;
         this.UsuarioAtivo = UsuarioAtivo;
-        this.CodigoPersonagem = CodigoPersonagem;
+        this.Personagem = CodigoPersonagem;
         this.Score = Score;
 
         return this;
@@ -203,7 +189,7 @@ public class Usuario
 
         if (usuario.getCodigoUsuario() < 0)
         {
-            main(args); //volta ao menu inicial por opção do usuario
+            main(args); 
         } else if (usuario.getCodigoUsuario() > 0)
         {
             return buscarJogador(usuario, conector);
@@ -229,11 +215,9 @@ public class Usuario
 
             usuario.setPersonagem(personagemEscolhido);
 
-            personagemEscolhido = conector.buscarHabilidadesPersonagem(usuario);
-
-            usuario.setPersonagem(personagemEscolhido);
-
             conector.inserirUsuario(usuario);
+
+            usuario = conector.buscarRanking(usuario);
         }
         return usuario;
     }

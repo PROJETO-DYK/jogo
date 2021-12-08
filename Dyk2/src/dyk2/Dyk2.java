@@ -25,10 +25,8 @@ public class Dyk2
 
     //instancias
     static Scanner in = new Scanner(System.in);
-    static Menu menu = new Menu();
     static JDBCConector conector = new JDBCConector();
-    static Usuario usuario = new Usuario();
-    static ArrayList<Usuario> jogadores = new ArrayList<Usuario>();
+    static Menu menu = new Menu();
     static Jogo jogo = new Jogo();
 
     public static void main(String[] args) throws SQLException, InterruptedException
@@ -38,19 +36,20 @@ public class Dyk2
         //interação com o usuário
         System.out.println("Seja Bem Vindo(a) ao DYK, seu jogo de Perguntas e respostas!!!\n");
 
-        menu.MenuInicializacao();
+        
 
         int opcaoInicial = 0;
         do
         {
+            menu.MenuInicializacao();
             System.out.print("Digite a opção desejada: ");
             opcaoInicial = in.nextInt();
+            clearConsole();
 
             switch (opcaoInicial)
             {
                 case 1 ->
                 {
-                    clearConsole();
                     iniciaJogo(args);
                 }
                 case 2 ->
@@ -59,14 +58,13 @@ public class Dyk2
                     menu.MenuDesenvolvedores();
                     esperar(5);
                     clearConsole();
-                    menu.MenuInicializacao();
 
                 }
                 case 3 ->
                 {
                     menu.MenuRegras();
-                    System.out.println("\n");
-                    menu.MenuInicializacao();
+                    esperar(10);
+                    clearConsole();
                 }
                 case 4 ->
                 {
@@ -95,6 +93,8 @@ public class Dyk2
 
     public static void iniciaJogo(String[] args) throws SQLException, InterruptedException
     {
+        ArrayList<Usuario> jogadores = new ArrayList<Usuario>();
+        
         System.out.println("Lembrando que o DYK é um jogo para jogar em duplas!\n");
 
         for (int i = 1; i <= QUANTIDADE_JOGADORES; i++)
@@ -106,9 +106,11 @@ public class Dyk2
             do
             {
                 Usuario jogador = new Usuario();
+                
                 menu.MenuInicial();
                 System.out.print("Digite a opção desejada: ");
                 int opcaoDesejada = in.nextInt();
+                clearConsole();
 
                 switch (opcaoDesejada)
                 {
@@ -116,9 +118,12 @@ public class Dyk2
                     {
                         jogador = Usuario.buscarJogador(jogador, conector);
 
-                        opcaoValida = validarSeJogadorCompleto(jogador, i);
-                        clearConsole();
-                        System.out.println("Usuario Logado com sucesso");
+                        opcaoValida = validarSeJogadorCompleto(jogador);
+                        if(opcaoValida)
+                        {
+                            jogador.setNumeroJogador(i);
+                            jogadores.add(jogador);
+                        }
                         esperar(3);
                         clearConsole();
                     }
@@ -130,9 +135,12 @@ public class Dyk2
 
                         jogador = Usuario.criarUsuario(args, personagemEscolhido, conector);
 
-                        opcaoValida = validarSeJogadorCompleto(jogador, i);
-                        clearConsole();
-                        System.out.println("Usuario Logado com sucesso");
+                        opcaoValida = validarSeJogadorCompleto(jogador);
+                        if(opcaoValida)
+                        {
+                            jogador.setNumeroJogador(i);
+                            jogadores.add(jogador);
+                        }
                         esperar(3);
                         clearConsole();//TODO: cORRIGIR LOGICA DA CRIAÇÃO DO PERSONAGEM
                     }
@@ -147,8 +155,9 @@ public class Dyk2
                     }
                     case 4 ->
                     {
-                        main(args);
+                        jogadores.clear();
                         clearConsole();
+                        main(args);
                     }
                     case 0 ->
                     {
@@ -202,12 +211,10 @@ public class Dyk2
         menu.MenuEncerramento();
     }
 
-    public static boolean validarSeJogadorCompleto(Usuario jogador, int numeroJogador) throws SQLException
+    public static boolean validarSeJogadorCompleto(Usuario jogador) throws SQLException
     {
         if (jogador.getCodigoUsuario() > 0 && jogador.getPersonagem() != null)
         {
-            jogador.setNumeroJogador(numeroJogador);
-            jogadores.add(jogador);
             System.out.println("Usuario logado com sucesso!");
             return true;
         } else
