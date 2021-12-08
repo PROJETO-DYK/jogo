@@ -33,7 +33,6 @@ public class Dyk2
     {
         conector.inciarConexao(); // ABRE CONEXAO COM BANCO
 
-        //interação com o usuário
         System.out.println("Seja Bem Vindo(a) ao DYK, seu jogo de Perguntas e respostas!!!\n");
 
         
@@ -142,7 +141,7 @@ public class Dyk2
                             jogadores.add(jogador);
                         }
                         esperar(3);
-                        clearConsole();//TODO: cORRIGIR LOGICA DA CRIAÇÃO DO PERSONAGEM
+                        clearConsole();
                     }
                     case 3 ->
                     {
@@ -175,7 +174,7 @@ public class Dyk2
         }
         
         clearConsole();
-        //jogo.jogar(jogadores, conector);
+        jogo.jogar(jogadores, conector);
         
         System.out.println("Fim das perguntas\n");
         menu.MenuEncerramento();
