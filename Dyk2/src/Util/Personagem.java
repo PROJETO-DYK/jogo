@@ -100,14 +100,13 @@ public class Personagem
         ArrayList<Personagem> personagens = new ArrayList<Personagem>();
 
         personagens = conector.buscarPersonagens();
-<<<<<<< HEAD
         
         boolean opcaoValida = false;
         do{
             if (!opcaoValida)
                 System.out.println("Personagem inexistente!\n");
                 
-            System.out.println("Escolha o seu pesonagem:");
+            System.out.println("Escolha o pesonagem: \n LEMBRANDO QUE DEVE APENAS ESCOLHER AS OPÇÕES NUMERICAS ABAIXO");
             for (Personagem personagem : personagens)
             {
                 System.out.println("[" + personagem.getIdPersonagem() + "]" + " - " + personagem.getNomePersonagem());
@@ -121,6 +120,12 @@ public class Personagem
         
                 personagem = conector.buscarHabilidadesPersonagem(personagem);
                 
+                clearConsole();
+                System.out.println("Opção escolhida: " + personagens.get(personagemEscolhido - 1).getIdPersonagem());
+                System.out.println("O personagem escolhido foi " + personagens.get(personagemEscolhido -1).getNomePersonagem());
+                System.out.println("O personagem tem: " + personagens.get(personagemEscolhido -1).getTempoVida() + " de vida!");
+                System.out.println("O personagem possui a Habilidade: " + personagens.get(personagemEscolhido -1).getHabilidades());
+                
                 opcaoValida = true;
                 
                 return personagem;
@@ -129,23 +134,5 @@ public class Personagem
         }while (!opcaoValida);
         
         return null;
-=======
-
-        System.out.println("Escolha o pesonagem: \n LEMBRANDO QUE DEVE APENAS ESCOLHER AS OPÇÕES NUMERICAS ABAIXO");
-        for (Personagem personagem : personagens)
-        {
-            System.out.println(personagem.getIdPersonagem() + " - " + personagem.getNomePersonagem());
-        }
-
-        int personagemEscolhido = in.nextInt();
-        
-        clearConsole();
-        System.out.println("Opção escolhida: " + personagens.get(personagemEscolhido - 1).getIdPersonagem());
-        System.out.println("O personagem escolhido foi " + personagens.get(personagemEscolhido -1).getNomePersonagem());
-        System.out.println("O personagem tem: " + personagens.get(personagemEscolhido -1).getTempoVida() + " de vida!");
-        System.out.println("O personagem possui a Habilidade: " + personagens.get(personagemEscolhido -1).getHabilidades());
-        
-        return personagens.get(personagemEscolhido - 1);
->>>>>>> 6ec75ca612ff6fc320c81e0cf11c61cf9e24faa3
     }
 }

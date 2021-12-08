@@ -173,8 +173,7 @@ public class Dyk2
             } while (!opcaoValida);
 
         }
-
-
+        
         clearConsole();
         //jogo.jogar(jogadores, conector);
         
