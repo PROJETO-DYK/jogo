@@ -113,8 +113,6 @@ public class JDBCConector
 
         stmt.setString(1, email);
 
-        System.out.println(stmt);
-
         ResultSet res = stmt.executeQuery();
 
         if (res.next())
@@ -191,17 +189,18 @@ public class JDBCConector
 
     }
 
-    public int salvarScore(int score, int CodigoUsuario)
+    public int salvarScore(int score, int codigoUsuario)
     {
         String query = "update ranking "
-                + "pontuacao = ? "
-                + "where cod_usuario = " + CodigoUsuario;
+                + "set pontuacao = ? "
+                + "where cod_usuario = ?";
 
         try
         {
             PreparedStatement stmt = conexao.prepareStatement(query);
 
             stmt.setInt(1, score);
+            stmt.setInt(2, codigoUsuario);
 
             return stmt.executeUpdate();
 

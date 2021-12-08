@@ -22,7 +22,7 @@ public class Jogo
 
         perguntas = Pergunta.buscarPerguntas(conector);
 
-        int jogadorEscolhido = Usuario.escolherUsuario(jogadores.size()-1);
+        int jogadorEscolhido = Usuario.escolherUsuario(jogadores.size());
 
         int rodada = 1;
         while (!perguntas.isEmpty())
@@ -42,13 +42,14 @@ public class Jogo
                 esperar(5);
                 clearConsole();
                 System.out.println("Escolhendo Jogador para iniciar a partida...");
-                esperar(10);
+                esperar(3);
                 clearConsole();
                 System.out.println("Disafiante " + jogadores.get(jogadorEscolhido).getNomeUsuario()+ " você irá iniciar o jogo! E logo apos sera o proximo jogador");
-                esperar(4);
+                esperar(3);
                 clearConsole();
             } else
             {
+                System.out.println("Disafiante " + jogadores.get(jogadorEscolhido).getNomeUsuario()+ " Agora é sua vez.");
                 jogadorEscolhido = trocarJogador(jogadorEscolhido);
             }
             Usuario jogadorAtual = jogadores.get(jogadorEscolhido);
@@ -87,17 +88,17 @@ public class Jogo
                     menu.MenuRespostaCerta();
                     jogadorAtual.setScore(jogadorAtual.getScore()+PONTUACAO_CREDITADA);
                     System.out.println("VAMOS PARA A RODADA " + (rodada + 1) + "\n");
-                    //esperar(10);
+                    esperar(5);
                     clearConsole();
 
                 } else
                 {
                     clearConsole();
                     menu.MenuRespostaErrada();
-                    System.out.println("VAMOS PARA A RODADA " + (rodada + 1) + "\n");
+                    
                     jogadorAtual.getPersonagem().setTempoVida(jogadorAtual.getPersonagem().getTempoVida() - PONTUACAO_DEBITADA);
 
-                    if (jogadorAtual.getPersonagem().getTempoVida() < 0)
+                    if (jogadorAtual.getPersonagem().getTempoVida() <= 0)
                     {
                         int proximoJogador = trocarJogador(jogadorEscolhido);
                         salvarScores(jogadores, conector);
@@ -121,7 +122,8 @@ public class Jogo
                         //E ENCERRO O JOGO
                     } else
                     {
-                        esperar(10);
+                        System.out.println("VAMOS PARA A RODADA " + (rodada + 1) + "\n");
+                        esperar(5);
                         clearConsole();
                     }
                 }
@@ -181,8 +183,6 @@ public class Jogo
             perguntas.remove(perguntaEscolhida);
         }
         salvarScores(jogadores, conector);
-        System.out.println("Fim das perguntas\n");
-        menu.MenuEncerramento();
     }
 
     public static void salvarScores(ArrayList<Usuario> jogadores, JDBCConector conector)

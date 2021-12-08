@@ -34,6 +34,23 @@ public class Usuario
         this.UsuarioAtivo = UsuarioAtivo;
     }
 
+    public Usuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo, int NumeroJogador, int CodigoPersonagem, int Score, Personagem personagem)
+    {
+        this.CodigoUsuario = CodigoUsuario;
+        this.NomeUsuario = NomeUsuario;
+        this.SobrenomeUsuario = SobrenomeUsuario;
+        this.Email = Email;
+        this.Apelido = Apelido;
+        this.Senha = Senha;
+        this.UsuarioAtivo = UsuarioAtivo;
+        this.NumeroJogador = NumeroJogador;
+        this.CodigoPersonagem = CodigoPersonagem;
+        this.Score = Score;
+        this.personagem = personagem;
+    }
+    
+    
+
     public Usuario()
     {
     }

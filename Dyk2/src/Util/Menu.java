@@ -25,6 +25,7 @@ public class Menu {
         System.out.println("[1] - Logar");
         System.out.println("[2] - Cadastrar");
         System.out.println("[3] - Ranking");
+        System.out.println("[4] - Voltar ao Menu Inicial");
         System.out.println("[0] - Sair\n");
     }
     public void MenuRegras()

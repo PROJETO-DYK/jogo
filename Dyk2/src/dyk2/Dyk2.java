@@ -1,6 +1,7 @@
 package dyk2;
 
 import Repository.JDBCConector;
+import Util.Habilidade;
 import Util.Jogo;
 import Util.Menu;
 import Util.Personagem;
@@ -11,6 +12,7 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Dyk2
 {
@@ -140,6 +142,11 @@ public class Dyk2
                         System.out.println("chamar metodo para ranking");//TODO: Logica
                         opcaoValida = true;
                     }
+                    case 4 ->
+                    {
+                        main(args);
+                        clearConsole();
+                    }
                     case 0 ->
                     {
                         menu.MenuEncerramento();
@@ -154,9 +161,42 @@ public class Dyk2
             } while (!opcaoValida);
 
         }
+        jogadores.add(new Usuario(1, 
+                                "Thiago", 
+                                "ameno", 
+                "ameno", 
+                "ameno", 
+                "ameno", 
+                true, 
+                1, 
+                5, 
+                0, 
+                new Personagem (5, 
+                "Zezinho",
+                        new ArrayList<Habilidade>(),(float)100, 
+                        true)));
+        
+        jogadores.add(new Usuario(2, 
+                                "Gladson", 
+                                "ameno", 
+                "ameno", 
+                "ameno", 
+                "ameno", 
+                true, 
+                2, 
+                5, 
+                0, 
+                new Personagem (5, 
+                "Zezinho",
+                        new ArrayList<Habilidade>(),(float)100, 
+                        true)));
+
 
         clearConsole();
-        jogo.jogar(jogadores, conector);
+        //jogo.jogar(jogadores, conector);
+        
+        System.out.println("Fim das perguntas\n");
+        menu.MenuEncerramento();
     }
 
     public static boolean validarSeJogadorCompleto(Usuario jogador, int numeroJogador) throws SQLException

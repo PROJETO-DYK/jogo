@@ -13,6 +13,10 @@ public class Habilidade
         this.Habilidade = Habilidade;
         this.habilidadeUtilizada = habilidadeUtilizada;
     }
+    
+    public Habilidade()
+    {
+    }
 
     public int getCodigoHabilidade()
     {
