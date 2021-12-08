@@ -4,11 +4,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/D:/Faculdade/Projeto/jogo/Dyk2/src/dyk2/Dyk2.java</file>
-            <file>file:/D:/Faculdade/Projeto/jogo/Dyk2/src/Util/Jogo.java</file>
-            <file>file:/D:/Faculdade/Projeto/jogo/Dyk2/src/Util/Ranking.java</file>
             <file>file:/D:/Faculdade/Projeto/jogo/Dyk2/src/Repository/JDBCConector.java</file>
-            <file>file:/D:/Faculdade/Projeto/jogo/Dyk2/src/Util/Usuario.java</file>
-            <file>file:/D:/Faculdade/Projeto/jogo/Dyk2/src/Util/Menu.java</file>
+            <file>file:/D:/Faculdade/Projeto/jogo/Dyk2/src/Util/Personagem.java</file>
         </group>
     </open-files>
 </project-private>
