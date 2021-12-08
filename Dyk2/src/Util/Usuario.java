@@ -5,6 +5,7 @@ import static dyk2.Dyk2.main;
 import java.sql.SQLException;
 import java.util.Random;
 import java.util.Scanner;
+import Util.Ranking;
 
 public class Usuario
 {
@@ -18,8 +19,8 @@ public class Usuario
     private boolean UsuarioAtivo;
     private int NumeroJogador;
     private int CodigoPersonagem;
-    private int Score;
-    private Personagem personagem;
+    private Ranking Score;
+    private Personagem Personagem;
 
     static Scanner in = new Scanner(System.in);
 
@@ -34,7 +35,7 @@ public class Usuario
         this.UsuarioAtivo = UsuarioAtivo;
     }
 
-    public Usuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo, int NumeroJogador, int CodigoPersonagem, int Score, Personagem personagem)
+    public Usuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo, int NumeroJogador, int CodigoPersonagem, Ranking Score, Personagem Personagem)
     {
         this.CodigoUsuario = CodigoUsuario;
         this.NomeUsuario = NomeUsuario;
@@ -46,7 +47,7 @@ public class Usuario
         this.NumeroJogador = NumeroJogador;
         this.CodigoPersonagem = CodigoPersonagem;
         this.Score = Score;
-        this.personagem = personagem;
+        this.Personagem = Personagem;
     }
     
     
@@ -137,35 +138,34 @@ public class Usuario
 
     public Personagem getPersonagem()
     {
-        return personagem;
+        return Personagem;
     }
 
-    public void setPersonagem(Personagem personagem)
+    public void setPersonagem(Personagem Personagem)
     {
-        this.personagem = personagem;
+        this.Personagem = Personagem;
     }
 
     public Personagem getCodigoPersonagem()
     {
-        return personagem;
+        return Personagem;
     }
 
-    public void setCodigoPersonagem(Personagem personagem)
+    public void setCodigoPersonagem(Personagem Personagem)
     {
-        this.personagem = personagem;
+        this.Personagem = Personagem;
     }
 
-    public int getScore()
-    {
+    public Ranking getScore() {
         return Score;
     }
 
-    public void setScore(int Score)
-    {
+    public void setScore(Ranking Score) {
         this.Score = Score;
     }
 
-    public Usuario preencherUsuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo, int CodigoPersonagem, int Score)
+
+    public Usuario preencherUsuario(int CodigoUsuario, String NomeUsuario, String SobrenomeUsuario, String Email, String Apelido, String Senha, boolean UsuarioAtivo, int CodigoPersonagem, Ranking Score)
     {
         Personagem p = new Personagem();
         this.CodigoUsuario = CodigoUsuario;

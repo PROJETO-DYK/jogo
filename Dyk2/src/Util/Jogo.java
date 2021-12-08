@@ -84,9 +84,12 @@ public class Jogo
             {
                 if (perguntas.get(perguntaEscolhida).getAlternativas().get(respostaEscolhidaJogador).isCorreta())
                 {
+                    Ranking score = new Ranking(jogadorAtual.getScore().getScore());
                     clearConsole();
+                    var scoreNovo = score.getScore() + PONTUACAO_CREDITADA;
+                    score.setScore(scoreNovo);
                     menu.MenuRespostaCerta();
-                    jogadorAtual.setScore(jogadorAtual.getScore()+PONTUACAO_CREDITADA);
+                    jogadorAtual.setScore(score);
                     System.out.println("VAMOS PARA A RODADA " + (rodada + 1) + "\n");
                     esperar(5);
                     clearConsole();
@@ -108,7 +111,7 @@ public class Jogo
                         System.out.println(jogadorAtual.getNomeUsuario() + ": " + jogadorAtual.getScore());
                         System.out.println(jogadores.get(proximoJogador).getNomeUsuario() + ": " + jogadores.get(proximoJogador).getScore());
 
-                        if (jogadorAtual.getScore() > jogadores.get(proximoJogador).getScore())
+                        if (jogadorAtual.getScore().getScore() > jogadores.get(proximoJogador).getScore().getScore())
                         {
                             System.out.println("Jogador " + jogadorAtual.getNomeUsuario());
                         } else if ((jogadorAtual.getScore() == jogadores.get(proximoJogador).getScore()))
@@ -154,8 +157,8 @@ public class Jogo
                     {
 
                         clearConsole();
-                        int pontuacaoJogadorAtual = jogadores.get(jogadorAtual.getNumeroJogador()).getScore();
-                        int pontuacaoProximoJogador = jogadores.get(jogadorAtual.getNumeroJogador()).getScore();
+                        int pontuacaoJogadorAtual = jogadores.get(jogadorAtual.getNumeroJogador()).getScore().getScore();
+                        int pontuacaoProximoJogador = jogadores.get(jogadorAtual.getNumeroJogador()).getScore().getScore();
 
                         System.out.println(jogadorAtual.getNomeUsuario()
                                 + "\n você terá o seu score abaixado em " + PONTUACAO_DEBITADA + " pontos"
@@ -189,7 +192,7 @@ public class Jogo
     {
         for (int i = 0; i < jogadores.size(); i++)
         {
-            conector.salvarScore(jogadores.get(i).getScore(), jogadores.get(i).getCodigoUsuario());
+            conector.salvarScore(jogadores.get(i).getScore().getScore(), jogadores.get(i).getCodigoUsuario());
         }
 
     }

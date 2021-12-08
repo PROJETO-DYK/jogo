@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Util.Pergunta;
+import Util.Ranking;
 
 public class JDBCConector
 {
@@ -125,7 +126,7 @@ public class JDBCConector
                     res.getString("SENHA"),
                     res.getBoolean("IND_ATIVO"),
                     res.getInt("COD_PERSONAGEM"),
-                    res.getInt("PONTUACAO"));
+                    new Ranking(res.getInt("PONTUACAO")));
 
             validarSeSenhaEstaCorreta(senha, res, controleProcessamento, usuario);
         } else
@@ -209,6 +210,28 @@ public class JDBCConector
             System.out.println("[ERRO] AO EXECUTAR QUERY " + ex);
         }
         return 0;
+    }
+    
+    public ArrayList<Ranking> buscarScore () throws SQLException
+    {
+        ArrayList<Ranking> rankings = new ArrayList<>();
+        
+        String query = "select * "
+                + "from Ranking r "
+                + "join usuario u on u.COD_USUARIO = r.COD_USUARIO "
+                + "order by r.PONTUACAO desc, u.NOME_USUARIO";
+        
+         PreparedStatement stmt = conexao.prepareStatement(query);
+
+         ResultSet res = stmt.executeQuery();
+         
+         while (res.next())
+        {
+            rankings.add(new Ranking(res.getInt("PONTUACAO"),
+                                     res.getInt("COD_USUARIO"),
+                                     res.getString("NOME_USUARIO")));
+        }            
+        return rankings;
     }
 
     //</editor-fold>
