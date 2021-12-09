@@ -11,7 +11,7 @@ public class mock
 {
     public void usuarioMock()
     {
-        //        jogadores.add(new Usuario(1, 
+//                jogadores.add(new Usuario(1, 
 //                                "Thiago", 
 //                                "ameno", 
 //                "ameno", 
@@ -40,7 +40,7 @@ public class mock
 //                "Zezinho",
 //                        new ArrayList<Habilidade>(),(float)100, 
 //                        true)));
-//
+
     }
     
 }

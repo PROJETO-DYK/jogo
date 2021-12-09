@@ -9,7 +9,7 @@ VALUES
 INSERT INTO USUARIO
 (NOME_USUARIO, SOBRENOME_USUARIO, EMAIL, APELIDO_USUARIO, SENHA, COD_PERSONAGEM) VALUES
 ('Thiago','Santos','ts@gmail.com','Thiago','123',1),
-('Gladson','Ameno','ga@gmail.compergunta','Gladstone','456',2),
+('Gladson','Ameno','ga@gmail.com','Gladstone','456',2),
 ('Amanda','Campos','ac@gmail.com','Mandinha','789',3);
 
 

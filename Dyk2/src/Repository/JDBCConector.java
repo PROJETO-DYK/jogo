@@ -17,8 +17,8 @@ public class JDBCConector
     Scanner in = new Scanner(System.in);
 
     private final String URL = "jdbc:mysql://localhost:3306/dyk_db";
-    private final String USER = "admin";
-    private final String PASSWD = "12345";
+    private final String USER = "root";
+    private final String PASSWD = "Gafs1999@";
     private final String DRIVER_BANCO = "com.mysql.cj.jdbc.Driver";
 
     private Connection conexao;
@@ -95,7 +95,7 @@ public class JDBCConector
 
         ResultSet res = stmt.executeQuery();
         
-        System.out.println(stmt);
+        
 
         if (res.next())
         {
@@ -476,7 +476,7 @@ public class JDBCConector
                 i++;
             }
             
-            System.out.println(stmt); //todo
+             //todo
             
             stmt.executeUpdate();
 
@@ -511,7 +511,7 @@ public class JDBCConector
                 i++;
             }
             
-            System.out.println(stmt);
+            
             
             stmt.executeUpdate();
 
@@ -561,7 +561,7 @@ public class JDBCConector
                 }
             }
             
-            System.out.println(stmt);
+            
             
             stmt.executeUpdate();
 

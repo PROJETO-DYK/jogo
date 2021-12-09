@@ -2,6 +2,7 @@ package dyk2;
 
 import Repository.JDBCConector;
 import Util.Alternativa;
+import Util.Habilidade;
 import Util.Jogo;
 import Util.Menu;
 import Util.Pergunta;
@@ -64,7 +65,7 @@ public class Dyk2
                 case 3 ->
                 {
                     menu.MenuRegras();
-                    esperar(10);
+                    esperar(3);
                     clearConsole();
                 }
 //                case 4 ->
@@ -177,7 +178,7 @@ public class Dyk2
             } while (!opcaoValida);
 
         }
-        
+
         clearConsole();
         jogo.jogar(jogadores, conector);
         

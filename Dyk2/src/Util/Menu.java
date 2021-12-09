@@ -78,25 +78,23 @@ public class Menu {
 
     }
 
-        void MenuRespostaCerta(ArrayList<Usuario>jogadores) {
-        int jogadorEscolhido = Usuario.escolherUsuario(jogadores.size());
-        Usuario jogadorAtual = jogadores.get(jogadorEscolhido);
-        int pontuacaoJogadorAtual = jogadores.get(jogadorAtual.getNumeroJogador()).getScore().getScore();
-        
+        public void MenuRespostaCerta(int score, float vida) {
+
         System.out.println("\nExcelente! Resposta correta, não gerou perda de vida");
         System.out.println("\nAcrescimo de 10 pontos\n");
         System.out.println("#####################################");
-        System.out.println("## Atualmente a sua vida e:");
-        System.out.println("## Atualmente a sua pontuação e:" + pontuacaoJogadorAtual);
+        System.out.println("## Atualmente a sua vida e :" + vida + " ###");
+        System.out.println("## Atualmente a sua pontuação e :" + score + "##");
         System.out.println("#####################################\n");
         System.out.println("O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
 
     }
 
-    public void MenuRespostaErrada() {
-        System.out.println("\nOps!! Parece que você errou a resposta, perca de 5% de vida\n");
+    public void MenuRespostaErrada(int score, float vida) {
+        System.out.println("\nOps!! Parece que você errou a resposta, perca de 15% de vida\n");
         System.out.println("#####################################");
-        System.out.println("## Atualmente a sua vida e:        ##");
+        System.out.println("## Atualmente a sua vida e :" + vida + " ###");
+        System.out.println("## Atualmente a sua pontuação e :" + score + "##");
         System.out.println("#####################################\n");
         System.out.println("O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
 

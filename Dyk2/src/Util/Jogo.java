@@ -36,9 +36,9 @@ public class Jogo
                 for (Usuario jogador : jogadores)
                 {
                     if (interacoes<jogadores.size()-1)
-                        System.out.print("Jogador numero : "+ jogador.getNumeroJogador() + " Nome: "+ jogador.getNomeUsuario() + " - Score " + jogador.getScore() + " VS. \n");
+                        System.out.print("Jogador numero : "+ jogador.getNumeroJogador() + " Nome: "+ jogador.getNomeUsuario() + " - Score " + jogador.getScore().getScore() + " VS. \n");
                     else 
-                        System.out.print("Jogador numero : "+ jogador.getNumeroJogador() + " Nome: "+ jogador.getNomeUsuario() + " - Score " + jogador.getScore() + "\n");
+                        System.out.print("Jogador numero : "+ jogador.getNumeroJogador() + " Nome: "+ jogador.getNomeUsuario() + " - Score " + jogador.getScore().getScore() + "\n");
                     interacoes++;
                 }
                 esperar(5);
@@ -55,9 +55,9 @@ public class Jogo
                 jogadorEscolhido = trocarJogador(jogadorEscolhido);
             }
             Usuario jogadorAtual = jogadores.get(jogadorEscolhido);
-
+            
             int perguntaEscolhida = escolherPegunta(perguntas.size());
-
+           
             int respostaEscolhidaJogador = 0;
 
             boolean certeza = true;
@@ -90,8 +90,8 @@ public class Jogo
                     clearConsole();
                     var scoreNovo = score.getScore() + PONTUACAO_CREDITADA;
                     score.setScore(scoreNovo);
-                    menu.MenuRespostaCerta(jogadores);
                     jogadorAtual.setScore(score);
+                    menu.MenuRespostaCerta(scoreNovo,jogadorAtual.getPersonagem().getTempoVida());
                     System.out.println("VAMOS PARA A RODADA " + (rodada + 1) + "\n");
                     esperar(5);
                     clearConsole();
@@ -99,7 +99,7 @@ public class Jogo
                 } else
                 {
                     clearConsole();
-                    menu.MenuRespostaErrada();
+                    
                     
                     jogadorAtual.getPersonagem().setTempoVida(jogadorAtual.getPersonagem().getTempoVida() - PONTUACAO_DEBITADA);
 
@@ -123,10 +123,10 @@ public class Jogo
                         {
                             System.out.println("Jogador " + jogadores.get(proximoJogador).getNomeUsuario());
                         }
-
                         //E ENCERRO O JOGO
                     } else
                     {
+                        menu.MenuRespostaErrada(jogadorAtual.getScore().getScore(), jogadorAtual.getPersonagem().getTempoVida());
                         System.out.println("VAMOS PARA A RODADA " + (rodada + 1) + "\n");
                         esperar(5);
                         clearConsole();
@@ -152,12 +152,14 @@ public class Jogo
                     {
 
                         clearConsole();
-                        System.out.println("Nesse caso nenhum ponto será debitado dos participantes, obrigado por jogar o DYK.\n");
+                        System.out.println("Nesse caso nenhum ponto será debitado dos participantes.\n");
+                        validarVencedor(jogadores,jogadorAtual);
+                        esperar(2);
                         menu.MenuEncerramento();
                         System.exit(0);
+                        
                     } else
                     {
-
                         clearConsole();
                         int pontuacaoJogadorAtual = jogadores.get(jogadorAtual.getNumeroJogador()).getScore().getScore();
                         int pontuacaoProximoJogador = jogadores.get(jogadorAtual.getNumeroJogador()).getScore().getScore();
@@ -175,6 +177,9 @@ public class Jogo
                                 + "\nseu novo score é de : " + (pontuacaoProximoJogador + PONTUACAO_DEBITADA));
 
                         salvarScores(jogadores, conector);
+                        validarVencedor(jogadores,jogadorAtual);
+                        esperar(2);
+                        System.exit(0);
                     }
                 } else
                 {
@@ -183,11 +188,38 @@ public class Jogo
                     esperar(3);
                     clearConsole();
                 }
+                
             }
             rodada++;
             perguntas.remove(perguntaEscolhida);
+            
         }
         salvarScores(jogadores, conector);
+    }
+    
+    public void validarVencedor(ArrayList<Usuario> jogadores, Usuario jogadorAtual)
+    {
+    
+         int pontuacaoJogadorAtual = jogadores.get(jogadorAtual.getNumeroJogador()).getScore().getScore();
+                        int pontuacaoProximoJogador = jogadores.get(jogadorAtual.getNumeroJogador()).getScore().getScore();
+                        
+                        if (pontuacaoJogadorAtual > pontuacaoProximoJogador)
+                        {
+                        
+                            System.out.println("Parabens jogador " + jogadorAtual.getNomeUsuario() + " voce acaba de ganhar o jogo!!");
+                            System.out.println("Pontuação Final " + jogadorAtual.getScore().getScore());
+                            menu.MenuEncerramento();
+    
+                        }
+                        else
+                        {
+                            
+                            System.out.println("Parabens jogador " + jogadorAtual.getNomeUsuario() + " voce acaba de ganhar o jogo!!");
+                            System.out.println("Pontuação Final " + jogadorAtual.getScore().getScore());
+                            menu.MenuEncerramento();
+                            
+                        }
+        
     }
 
     public static void salvarScores(ArrayList<Usuario> jogadores, JDBCConector conector)

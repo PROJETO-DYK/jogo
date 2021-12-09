@@ -52,6 +52,8 @@ public class Usuario
     {
     }
 
+   
+
     public int getCodigoUsuario()
     {
         return CodigoUsuario;
