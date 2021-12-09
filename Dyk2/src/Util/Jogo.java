@@ -9,6 +9,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import Util.Menu;
+import Util.Usuario;
 
 public class Jogo
 {
@@ -88,7 +90,7 @@ public class Jogo
                     clearConsole();
                     var scoreNovo = score.getScore() + PONTUACAO_CREDITADA;
                     score.setScore(scoreNovo);
-                    menu.MenuRespostaCerta();
+                    menu.MenuRespostaCerta(jogadores);
                     jogadorAtual.setScore(score);
                     System.out.println("VAMOS PARA A RODADA " + (rodada + 1) + "\n");
                     esperar(5);
