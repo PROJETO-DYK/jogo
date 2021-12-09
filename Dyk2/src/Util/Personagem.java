@@ -121,11 +121,14 @@ public class Personagem
                 personagem = conector.buscarHabilidadesPersonagem(personagem);
                 
                 clearConsole();
-                System.out.println("Opção escolhida: " + personagens.get(personagemEscolhido - 1).getIdPersonagem());
-                System.out.println("O personagem escolhido foi " + personagens.get(personagemEscolhido -1).getNomePersonagem());
-                System.out.println("O personagem tem: " + personagens.get(personagemEscolhido -1).getTempoVida() + " de vida!");
-                System.out.println("O personagem possui a Habilidade: " + personagens.get(personagemEscolhido -1).getHabilidades());
-                
+                System.out.println("Opção escolhida: " + personagens.get(personagemEscolhido).getIdPersonagem());
+                System.out.println("O personagem escolhido foi " + personagens.get(personagemEscolhido).getNomePersonagem());
+                System.out.println("O personagem tem: " + personagens.get(personagemEscolhido).getTempoVida() + " de vida!");
+                System.out.println("O personagem possui as Habilidades: ");
+                for (Habilidade habilidade : personagens.get(personagemEscolhido).getHabilidades())
+                {
+                    System.out.println("- " + habilidade.getHabilidade());
+                }
                 opcaoValida = true;
                 
                 return personagem;
