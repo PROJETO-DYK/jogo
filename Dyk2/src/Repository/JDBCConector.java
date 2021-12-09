@@ -94,10 +94,12 @@ public class JDBCConector
         stmt.setString(1, email);
 
         ResultSet res = stmt.executeQuery();
+        
+        System.out.println(stmt);
 
         if (res.next())
         {
-            new Usuario (res.getInt("COD_USUARIO"),
+            usuario = new Usuario (res.getInt("COD_USUARIO"),
                     res.getString("NOME_USUARIO"),
                     res.getString("SOBRENOME_USUARIO"),
                     res.getString("EMAIL"),
