@@ -3,6 +3,8 @@ package Util;
 import java.util.ArrayList;
 import Repository.JDBCConector;
 import java.sql.SQLException;
+import Util.Usuario;
+import java.util.ArrayList;
 
 public class Menu {
 
@@ -76,10 +78,16 @@ public class Menu {
 
     }
 
-    public void MenuRespostaCerta() {
-        System.out.println("\nExcelente! Resposta correta, não gerou perda de vida\n");
+        void MenuRespostaCerta(ArrayList<Usuario>jogadores) {
+        int jogadorEscolhido = Usuario.escolherUsuario(jogadores.size());
+        Usuario jogadorAtual = jogadores.get(jogadorEscolhido);
+        int pontuacaoJogadorAtual = jogadores.get(jogadorAtual.getNumeroJogador()).getScore().getScore();
+        
+        System.out.println("\nExcelente! Resposta correta, não gerou perda de vida");
+        System.out.println("\nAcrescimo de 10 pontos\n");
         System.out.println("#####################################");
-        System.out.println("## Atualmente a sua vida e:        ##");
+        System.out.println("## Atualmente a sua vida e:");
+        System.out.println("## Atualmente a sua pontuação e:" + pontuacaoJogadorAtual);
         System.out.println("#####################################\n");
         System.out.println("O PROXIMO JOGADOR IRA RESPONDER AS PERGUNTAS!");
 
