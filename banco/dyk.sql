@@ -70,29 +70,12 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `DYK_db`.`TIPO_PERGUNTA`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `DYK_db`.`TIPO_PERGUNTA` (
-  `COD_TIPO_PERGUNTA` INT NOT NULL AUTO_INCREMENT,
-  `DESC_TIPO_PERGUNTA` VARCHAR(150) NULL,
-  PRIMARY KEY (`COD_TIPO_PERGUNTA`))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `DYK_db`.`PERGUNTA`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `DYK_db`.`PERGUNTA` (
   `COD_PERGUNTA` INT NOT NULL AUTO_INCREMENT,
   `PERGUNTA` VARCHAR(300) NOT NULL,
-  `COD_TIPO_PERGUNTA` INT NOT NULL,
-  PRIMARY KEY (`COD_PERGUNTA`, `COD_TIPO_PERGUNTA`),
-  INDEX `fk_PERGUNTA_TIPO_PERGUNTA1_idx` (`COD_TIPO_PERGUNTA` ASC) VISIBLE,
-  CONSTRAINT `fk_PERGUNTA_TIPO_PERGUNTA1`
-    FOREIGN KEY (`COD_TIPO_PERGUNTA`)
-    REFERENCES `DYK_db`.`TIPO_PERGUNTA` (`COD_TIPO_PERGUNTA`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`COD_PERGUNTA`))
 ENGINE = InnoDB;
 
 

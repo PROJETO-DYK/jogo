@@ -17,7 +17,7 @@ public class Menu {
         System.out.println("[1] - Iniciar o jogo");
         System.out.println("[2] - Informações dos desenvolvedores");
         System.out.println("[3] - Explicação do Jogo");
-        System.out.println("[4] - Cadastrar novas perguntas!");
+        //System.out.println("[4] - Cadastrar novas perguntas!");
         System.out.println("[0] - Sair\n");
     }
 

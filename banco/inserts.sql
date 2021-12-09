@@ -9,27 +9,22 @@ VALUES
 INSERT INTO USUARIO
 (NOME_USUARIO, SOBRENOME_USUARIO, EMAIL, APELIDO_USUARIO, SENHA, COD_PERSONAGEM) VALUES
 ('Thiago','Santos','ts@gmail.com','Thiago','123',1),
-('Gladson','Ameno','ga@gmail.com','Gladstone','456',2),
+('Gladson','Ameno','ga@gmail.compergunta','Gladstone','456',2),
 ('Amanda','Campos','ac@gmail.com','Mandinha','789',3);
 
-INSERT INTO tipo_pergunta
-(DESC_TIPO_PERGUNTA) VALUES
-('Banco de dados'),
-('Java'),
-('Programação');
 
 INSERT INTO pergunta
-(PERGUNTA,COD_TIPO_PERGUNTA) VALUES
-('Qual das alternativas a seguir NÃO é um tipo de relacionamento?',1),
-('Qual das funções a seguir pode ser usada apenas com valores numéricos? ',2),
-('Qual é a maneira mais rápida de acessar uma linha em uma tabela?',1),
-('Qual das opções abaixo não e uma IDE:',3),
-('Em Java, a estrutura de repetição que permite que um conjunto de instruções não seja executada nenhuma vez é representada por',2),
-('Referente a afirmativa a seguir selecione a alternativa que se encaixa em um significado de metodo JAVA:  "O metodo é visivel apenas pela própria classe. É o qualificador mais restritivo"',2),
-('Referente a afirmativa a seguir selecione a alternativa que se encaixa em um significado de metodo JAVA:  "O metodo  é visível pela própria classe, por suas subclasses e pelas classes do mesmo pacote"',2),
-('Referente a afirmativa a seguir selecione a alternativa que se encaixa em um significado de metodo JAVA:  "O metodo é visível por qualquer classe, sendo o qualificador mais aberto no sentido de que qualquer classe pode usar esse método"',2),
-('Qual dos metodos a seguir e utilizado em java para "Imprimir" uma mensagem na tela?',2),
-('Qual comando e usado quando queremos importar uma biblioteca para dentro do documento java na hora da programação?',2);
+(PERGUNTA) VALUES
+('Qual das alternativas a seguir NÃO é um tipo de relacionamento?'),
+('Qual das funções a seguir pode ser usada apenas com valores numéricos? '),
+('Qual é a maneira mais rápida de acessar uma linha em uma tabela?'),
+('Qual das opções abaixo não e uma IDE:'),
+('Em Java, a estrutura de repetição que permite que um conjunto de instruções não seja executada nenhuma vez é representada por'),
+('Referente a afirmativa a seguir selecione a alternativa que se encaixa em um significado de metodo JAVA:  "O metodo é visivel apenas pela própria classe. É o qualificador mais restritivo"'),
+('Referente a afirmativa a seguir selecione a alternativa que se encaixa em um significado de metodo JAVA:  "O metodo  é visível pela própria classe, por suas subclasses e pelas classes do mesmo pacote"'),
+('Referente a afirmativa a seguir selecione a alternativa que se encaixa em um significado de metodo JAVA:  "O metodo é visível por qualquer classe, sendo o qualificador mais aberto no sentido de que qualquer classe pode usar esse método"'),
+('Qual dos metodos a seguir e utilizado em java para "Imprimir" uma mensagem na tela?'),
+('Qual comando e usado quando queremos importar uma biblioteca para dentro do documento java na hora da programação?');
 
 INSERT INTO resposta
 (RESPOSTA) VALUES

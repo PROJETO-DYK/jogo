@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import Util.Pergunta;
 import Util.Ranking;
+import java.util.List;
 
 public class JDBCConector
 {
@@ -68,28 +69,6 @@ public class JDBCConector
         }
 
         return null;
-    }
-
-    public int criarPreparedStatement(String query, int quantidadeParametros, String[] listaParamentros)
-    {
-        try
-        {
-            PreparedStatement stmt = conexao.prepareStatement(query);
-
-            for (int i = 0; i < quantidadeParametros; i++)
-            {
-                stmt.setString(i + 1, listaParamentros[i]);
-            }
-
-            System.out.println(stmt);
-
-            return stmt.executeUpdate();
-        } catch (SQLException ex)
-        {
-            System.out.println("[ERRO] AO EXECUTAR QUERY " + ex);
-        }
-
-        return 0;
     }
     //</editor-fold>
 
@@ -401,8 +380,196 @@ public class JDBCConector
 
         return perguntas;
     }
-    //</editor-fold>
-    //<editor-fold defaultstate="collapsed" desc="Querys Gerais">
+    
+    public ArrayList<Pergunta> buscarCodigoPerguntas(ArrayList <Pergunta> perguntas) throws SQLException
+    {
+        String query = "select pergunta "
+                + "from pergunta  "
+                + "where pergunta in (?)";
+
+        PreparedStatement stmt = conexao.prepareStatement(query);
+
+        int i=0;
+        for(Pergunta pergunta : perguntas)
+        {
+            stmt.setString(i += 1, pergunta.getPergunta());
+        }
+        ResultSet res = stmt.executeQuery();
+        
+        while (res.next())
+        {
+            for(Pergunta pergunta : perguntas)
+            {
+                for (Alternativa alternativa : pergunta.getAlternativas())
+                {
+                    if (alternativa.getResposta().equals(res.getString("PERGUNTA")))
+                    {
+                        alternativa.setCodigoResposta(res.getInt("COD_PERGUNTA"));
+                    }
+                }
+            }
+        }
+
+        return perguntas;
+    }
+    
+    public ArrayList<Pergunta> buscarCodigoRespostas(ArrayList <Pergunta> perguntas) throws SQLException
+    {
+        String query = "select RESPOSTA "
+                + "from resposta  "
+                + "where resposta in (?)";
+
+        PreparedStatement stmt = conexao.prepareStatement(query);
+
+        int i=0;
+        for(Pergunta pergunta : perguntas)
+        {
+            for (Alternativa alternativa : pergunta.getAlternativas())
+            {
+                stmt.setString(i += 1, alternativa.getResposta());
+            }
+        }
+        ResultSet res = stmt.executeQuery();
+        
+        while (res.next())
+        {
+            for(Pergunta pergunta : perguntas)
+            {
+                for (Alternativa alternativa : pergunta.getAlternativas())
+                {
+                    if (alternativa.getResposta().equals(res.getString("Resposta")))
+                    {
+                        alternativa.setCodigoResposta(res.getInt("COD_RESPOSTA"));
+                    }
+                }
+            }
+        }
+
+        return perguntas;
+    }
+        
+    public void salvarPergunta(ArrayList<Pergunta> perguntas) throws SQLException
+    {
+      
+    
+        String query = "insert into pergunta "
+                + "(PERGUNTA) VALUES ";
+        for(Pergunta pergunta : perguntas)
+        {
+            if(perguntas.lastIndexOf(pergunta) == perguntas.size()-1)
+                query += "(?)";
+             else
+                query += "(?),";
+        }
+            System.out.println(query); //todo
+
+        try
+        {
+            PreparedStatement stmt = conexao.prepareStatement(query);
+            
+            int i = 1;
+            for(Pergunta pergunta : perguntas)
+            {
+                stmt.setString(i, pergunta.getPergunta());
+                i++;
+            }
+            
+            System.out.println(stmt); //todo
+            
+            stmt.executeUpdate();
+
+        } catch (SQLException ex)
+        {
+            System.out.println("[ERRO] AO EXECUTAR QUERY " + ex);
+        }
+    }
+    
+    public void salvarAlternativa(ArrayList<Alternativa> alternativas) throws SQLException
+    {
+    
+        String query = "insert into resposta "
+                    + "(resposta) VALUES ";
+        for(Alternativa alternativa : alternativas)
+        {
+            if(alternativas.lastIndexOf(alternativa) ==alternativas.size()-1)
+                query += "(?)";
+             else
+                query += "(?), ";
+        }
+            System.out.println(query);    
+
+        try
+        {
+            PreparedStatement stmt = conexao.prepareStatement(query);
+            
+            int i = 1;
+            for(Alternativa alternativa : alternativas)
+            {
+                stmt.setString(i, alternativa.getResposta());
+                i++;
+            }
+            
+            System.out.println(stmt);
+            
+            stmt.executeUpdate();
+
+        } catch (SQLException ex)
+        {
+            System.out.println("[ERRO] AO EXECUTAR QUERY " + ex);
+        }
+    }
+    
+    public void salvarRelacionamentoPerguntaResposta(ArrayList<Pergunta> perguntas) throws SQLException
+    {
+        String query = "insert into pergunta_resposta "
+                + "((COD_PERGUNTA,COD_RESPOSTA,IND_RESPOSTA_CORRETA)) VALUES ";
+        for(Pergunta pergunta : perguntas)
+        {
+            for (Alternativa alternativa : pergunta.getAlternativas())
+            {
+                if(pergunta.getAlternativas().lastIndexOf(alternativa) == pergunta.getAlternativas().size()-1)
+                    query += "(?,?,?)";
+                 else
+                    query += "(?,?,?), ";
+            }
+        }
+            System.out.println(query);    
+
+        try
+        {
+            PreparedStatement stmt = conexao.prepareStatement(query);
+            
+            int i = 1;
+            int j = 2;
+            int k = 3;
+            
+            for(Pergunta pergunta : perguntas)
+            {
+                for (Alternativa alternativa : pergunta.getAlternativas())
+                if(perguntas.lastIndexOf(pergunta) == 0)
+                {
+                    stmt.setInt(i, alternativa.getCodigoPergunta());
+                    stmt.setInt(j, alternativa.getCodigoResposta());
+                    stmt.setBoolean(k, alternativa.isCorreta());
+                }else
+                {
+                    stmt.setInt(i += 2, alternativa.getCodigoPergunta());
+                    stmt.setInt(j += 2, alternativa.getCodigoResposta());
+                    stmt.setBoolean(k =+ 2, alternativa.isCorreta());
+                }
+            }
+            
+            System.out.println(stmt);
+            
+            stmt.executeUpdate();
+
+        } catch (SQLException ex)
+        {
+            System.out.println("[ERRO] AO EXECUTAR QUERY " + ex);
+        }
+    }
+
+    
     //</editor-fold>
     //</editor-fold>
 

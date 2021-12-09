@@ -1,8 +1,10 @@
 package dyk2;
 
 import Repository.JDBCConector;
+import Util.Alternativa;
 import Util.Jogo;
 import Util.Menu;
+import Util.Pergunta;
 import Util.Personagem;
 import Util.Ranking;
 import java.util.Scanner;
@@ -65,10 +67,13 @@ public class Dyk2
                     esperar(10);
                     clearConsole();
                 }
-                case 4 ->
-                {
-                    System.out.println("cadastrar perguntas");//TODO: Logica
-                }
+//                case 4 ->
+//                {
+//                    cadastrarPerguntas();
+//                    esperar(5);
+//                    clearConsole();
+//                                        
+//                }
                 case 0 ->
                 {
                     menu.MenuEncerramento();
@@ -145,7 +150,7 @@ public class Dyk2
                     }
                     case 3 ->
                     {
-                        ArrayList<Ranking> rankings = new ArrayList<Ranking>();
+                        ArrayList<Ranking> rankings = new ArrayList<>();
                         rankings = conector.buscarScore();
                         clearConsole();
                         menu.MenuRanking(conector,rankings);
@@ -178,6 +183,15 @@ public class Dyk2
         
         System.out.println("Fim das perguntas\n");
         menu.MenuEncerramento();
+    }
+    
+    public static void cadastrarPerguntas() throws SQLException
+    {
+        ArrayList<Pergunta> perguntas = new ArrayList<Pergunta>();
+
+        perguntas = Pergunta.cadastrarPergunta(conector);
+
+        Alternativa.cadastrarAlternativas(conector, perguntas);
     }
 
     public static boolean validarSeJogadorCompleto(Usuario jogador) throws SQLException
